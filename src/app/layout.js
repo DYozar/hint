@@ -22,13 +22,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <div className="relative w-3/4 mx-auto ">
+        <div className="relative font-roboto capitalize w-[95%] sm:w-[90%] md:w-3/4 lg:w-[80%] lg:max-w-[1500px] lg:min-w-[1000px] mx-auto">
           <Header/>
-        
-      <ApolloWrapper>{children}</ApolloWrapper>
-      <Footer/>
+          <ApolloWrapper>{children}</ApolloWrapper>
+          <Footer/>
       </div>
       </body>
+      
     </html>
   );
 }

@@ -31,51 +31,24 @@ const  CategoryData = async ()=> {
 
 
 
-export const revalidate =10
+export const revalidate =0
 export default async function Home() {
  const Posts = await PostData()
  const Trend = await TrendData()
  const Categories =  await CategoryData()
 
 
- const categoryPosts = Categories.map(category =>
-  category.map(article => ({
-    ID: article.id,
-    Title: article.title,
-    Slug: article.slug,
-    imgUrl:article.imgUrl,
-    cTitle: article.Categories[0].title, 
-    cSlug: article.Categories[0].cSlug, 
-    })).slice(0,3)
-);
-
 const trend = Trend.map((article) => ({
+  ID: article.id,
+  Date:article.date,
   Title: article.title,
   Slug: article.slug,
+  cTitle:article.Categories[0]?.title,
+  cSlug:article.Categories[0]?.cSlug,
+  date: article.date,
   imgUrl:article.imgUrl,
 
 })).slice(0,5) ;
-
-const POSTS = Posts.map((article) => ({
-  ID: article.id,
-  Title: article.title,
-  Slug: article.slug,
-  imgUrl:article.imgUrl,
-  cTitle: article.Categories[0].title, 
-  cSlug: article.Categories[0].cSlug, 
-
-}));
-  
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -85,7 +58,8 @@ const POSTS = Posts.map((article) => ({
 
   return (
     <>
-    <Landing  PostData={POSTS} CategoryData={categoryPosts} TrendData={trend}/>
+    <Landing  PostData={Posts} CategoryData={Categories} TrendData={trend}/>
+    
     </>
     
   );
