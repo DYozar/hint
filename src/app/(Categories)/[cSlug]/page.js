@@ -75,7 +75,6 @@ const trend = Trend.map((article) => ({
 
 })).slice(0,5) ;
 
-console.log("Trend",Trend)
   return <CategoryPage  posts={Post}  subTitle={subTitle} Subcategories={SubCat}  TrendData={trend} params={params}/>
 }
 

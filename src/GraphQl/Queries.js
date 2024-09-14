@@ -47,7 +47,9 @@ export const GetPosts = async ()=>{
       title
       content
       slug
-      imgUrl
+      image{
+      url
+      }
       date
       reads
       Categories {
@@ -75,7 +77,9 @@ export const GetTrendPosts = async ()=>{
       title
       content
       slug
-      imgUrl
+      image{
+      url
+      }
 
       date
       reads
@@ -98,26 +102,33 @@ return result.Posts;
 
 export const GetSearchingPosts = async (title)=>{
     const GET_POSTS = gql`
-    query Query($title: String!) {
-        Posts(filters: { title : {containsi: $title } } ) {
-            id
-            title
-            slug
-            date
-            Categories {
-        title
-        cSlug
-      }
-      SubCategories {
-        title
-        sSlug
-        id
-      }
-        }
+    query Posts($filters: PostFilterInput) {
+  Posts(filters: $filters) {
+    id
+    title
+    slug
+    date
+    Categories {
+      title
+      cSlug
     }
-`;
+    SubCategories {
+      title
+      sSlug
+      id
+    }
+  }
+}
 
-const result = await request(url, GET_POSTS ,{title});
+`;
+const variables = {
+  filters: {
+    title: {
+      containsi:title
+    },
+  },
+};
+const result = await request(url, GET_POSTS ,variables);
 return result.Posts; 
 }
 
@@ -133,7 +144,9 @@ export const GetPostsByCslug = async (cSlug)=>{
       title
       content
       slug
-      imgUrl
+      image{
+      url
+      }
       date
       Categories {
         title
@@ -181,10 +194,12 @@ export const getPostsDetail = async (slug)=>{
     id
     title
     content
-    imgUrl
+    image{
+    url
+    }
     slug
     date
-imgAuthor
+    imgAuthor
     reads
     Categories {
       id
@@ -214,7 +229,9 @@ export const getRelatedPosts = async (slug,cSlug)=>{
     id
     title
     content
-    imgUrl
+    image{
+    url
+    }
     date
     slug
     reads
@@ -258,7 +275,9 @@ export const getPostsByCategory = async (cSlug)=>{
     id
     title
     content
-    imgUrl
+    image{
+    url
+    }
     date
     slug
     reads
@@ -295,12 +314,17 @@ export const getSubBasedOnCat = async (cSlug)=>{
   const GET_POSTS = gql`
 query SubCategories($filters: SubCategoryFilterInput) {
   SubCategories(filters: $filters) {
+  id
     title
     sSlug
     Categories {
       title
       cSlug
     }
+    Posts{
+    title
+    }
+    
   }
 }
 `;
@@ -316,8 +340,14 @@ const variables = {
 }
 
 
-const result = await request(url, GET_POSTS ,variables);
-return result.SubCategories; 
+try {
+  const result = await request(url, GET_POSTS, variables);
+  return result.SubCategories;
+} catch (error) {
+  console.error("GraphQL Error:", error); // Log error for debugging
+  // Handle the error gracefully, e.g., show a message to the user
+  return { message: "An error occurred while fetching subcategories." };
+}
 }
 
 
@@ -328,7 +358,9 @@ export const getPostBySubcategory = async (sSlug)=>{
     id
     title
     content
-    imgUrl
+    image{
+    url
+    }
     date
     slug
     reads
@@ -371,7 +403,9 @@ export const GetTrendPostsByCat = async (cSlug)=>{
     id
     title
     content
-    imgUrl
+    image{
+    url
+    }
     date
     slug
     reads

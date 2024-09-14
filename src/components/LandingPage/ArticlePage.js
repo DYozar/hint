@@ -59,26 +59,23 @@ const ArticlePage = ({detail, relatedPosts, currentUrl}) => {
   }, []);
 
 
-    console.log('posts',detail)
-
     const Article = () => {
 
 
         const Detail = detail.map((item, index) => {
-            console.log("cat",item )
  
             const date = moment(item.date);
             const isMoreThanADay = moment().diff(date, 'days') >= 1;
           
 
           return (
-           <div className=' '>
+           <div key={index} className=' '>
                 <>
                   <span className='  lg:flex items-center  my-10 '  >
                   <h1 className='lg:w-[75%] mx-auto m-4 text-5xl font-[900]  overflow-hidden  first-line:tracking-widest'>{item.title}</h1>
                     <span className='lg:w-[20%] text-start  items-center   '>
                       <h4>post created by platform staff&nbsp;&nbsp;&nbsp;</h4> 
-                      <time dateTime={item.date}>
+                      <time className='text-red-400' dateTime={item.date}>
                         {isMoreThanADay ? date.format('MMM D YYYY , hh:mm A ') : date.fromNow()}
                       </time>
                       <span className=' text-xl flex max-md:text-3xl space-x-2 my-2 '>
@@ -137,7 +134,7 @@ const ArticlePage = ({detail, relatedPosts, currentUrl}) => {
 
 
           return (
-           <div className='flex py-5  items-center space-x-2    '>
+           <Link key={index} href={item.slug} className='flex p-4   hover:bg-black/10 items-center space-x-2    '>
               <Image
                       src="https://cdn.pixabay.com/photo/2024/08/29/13/09/pineapple-9006965_640.jpg"
                       width={1000} /* Set a width that ensures full width */
@@ -146,9 +143,9 @@ const ArticlePage = ({detail, relatedPosts, currentUrl}) => {
                       className="rounded-lg object-cover max-md:w-[25%]  md:w-[20%] lg:w-[15%] h-ful  " /* Add w-full to make it full width */
                       priority={true}
               />
-              <Link href={item.slug} className='text-2xl  hover:underline underline-offset-8 '>{item.title}</Link>
+              <h1>{item.title}</h1>
               
-            </div>
+            </Link>
 
           );
         });
@@ -166,7 +163,7 @@ const ArticlePage = ({detail, relatedPosts, currentUrl}) => {
       <article><Article/></article>
       <h2 className='text-4xl'>related Posts</h2>
 
-      <div className='divide-y-2 '>
+      <div className='divide-y-[1px] divide-[#39225A]'>
         <Related/>
       </div>
     

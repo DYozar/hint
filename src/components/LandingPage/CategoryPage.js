@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import CatCard from '../MultiUse/Card';
-import {PostCard} from '../MultiUse/PostCard';
+import {PostCard , FirstPostCard} from '../MultiUse/PostCard';
 import moment from 'moment';
 import HeroSection from './LandingComponent/HeroSection';
 import TrendSect from './LandingComponent/TrendSection';
 import CategorySect from './LandingComponent/CatSection';
 import { useSearchParams } from 'next/navigation';
 
-const CategoryPage = ({ posts, subTitle, Subcategories, TrendData }) => {
+const CategoryPage = ({ posts, subTitle, Subcategories, TrendData ,index }) => {
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [filteredItems, setFilteredItems] = useState(posts);
   const [pageSize, setPageSize] = useState(10);
@@ -60,8 +60,11 @@ const CategoryPage = ({ posts, subTitle, Subcategories, TrendData }) => {
 
   const Title = subTitle.map((t) =>( {
    title: t.title,
-   slug:t.sSlug
-  
+   slug:t.sSlug,
+    postTitle: t.Posts.map((t) =>( {
+      title: t.title,
+     
+     }))
   
   }));
   const filters = [Title];
@@ -82,20 +85,19 @@ const CategoryPage = ({ posts, subTitle, Subcategories, TrendData }) => {
       postData: articlesData.slice(start, end),
     });
   }
-console.log("filter" , filters)
   return (
     <div>
       <div className="py-5 px-2">
         <button
           onClick={handleFilterAll}
-          className={`button ${selectedFilters.length === 0 ? 'active' : ''}`}
+          className={`button text-black dark:text-white ${selectedFilters.length === 0 ? 'active' : ''}`}
         >
           All
         </button>
         {filters.flat().map((category, idx) => (
           <button
             onClick={() => handleFilterButtonClick(category.slug)}
-            className={`button ${selectedFilters.includes(category.slug) ? 'active' : ''}`}
+            className={`button text-black dark:text-white ${selectedFilters.includes(category.slug) ? 'active' : ''}`}
             key={`filters-${idx}`}
           >
             {category.title}
@@ -108,7 +110,7 @@ console.log("filter" , filters)
           key={combinedData[0]?.postData[0]?.id}
           className="lg:w-[55%] relative mx-auto pt-28 lg:min-h-[750px] lg:pr-30"
         >
-          <HeroSection combinedData={combinedData} />
+          <HeroSection combinedData={combinedData} index={index} />
         </div>
         <div className="lg:w-[30%] pt-28 mb-20 mx-auto">
           <TrendSect data={TrendData} />
@@ -118,9 +120,14 @@ console.log("filter" , filters)
       {combinedData.map((group, groupIndex) => (
         <div key={groupIndex} className="relative bottom-1 lg:flex justify-between">
           <div className="lg:w-[55%]">
-            {group.postData.map((post, postIndex) => {
-              if (postIndex > 1) {
-                return <PostCard key={postIndex} post={post} index={postIndex} />;
+          {group.postData.map((post, postIndex) => {
+              let content;
+              if (postIndex > 0 && postIndex === 1 ) {
+                return <FirstPostCard  key={postIndex} post={post} index={postIndex} />
+              }else if(postIndex > 1 )  {
+                return (
+                 <PostCard key={postIndex} post={post} index={postIndex} />
+                );
               }
             })}
           </div>

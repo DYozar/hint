@@ -23,7 +23,8 @@ const Menu = ({ Categories }) => {
   const [size, setSize] = useState(4);
   const [open, setOpen] = useState(false);
   const [scrollDirection, setScrollDirection] = useState("scroll-up");
-  const [addclassName, setAddclassName] = useState("left-3/4 border-b-2");
+  const [addclassName, setAddclassName] = useState("left-3/4 border-b-2 w-3/4 lg:w-2/4");
+  const [ScrollHidden, setScrollHidden] = useState();
   const [SearchInput, setSearchInput] = useState("");
   const router = useRouter();
 
@@ -45,6 +46,7 @@ const Menu = ({ Categories }) => {
     setOpen(false);
 
     const searchUrl = `/searching/${SearchInput}`;
+
     try {
       // Redirect to the dynamic search results page with the SearchInput as the slug
       router.push(searchUrl);
@@ -52,6 +54,10 @@ const Menu = ({ Categories }) => {
       console.error("Error fetching articles:", error);
     }
   };
+
+
+
+
   useEffect(() => {
     let lastScroll = 0;
 
@@ -59,9 +65,12 @@ const Menu = ({ Categories }) => {
       const currentScroll = window.scrollY;
 
       if (currentScroll > 20) {
-        setAddclassName("bg-red-900 w-3/4 rounded-2xl h-[55px] border-0 mx-auto");
+        setAddclassName("bg-black dark:bg-white font-semibold w-fit text-white dark:text-black rounded-full h-[55px] border-0 left-[90%]");
+        setScrollHidden("hidden")
       } else {
-        setAddclassName("left-3/4 border-b-2");
+        setAddclassName("left-3/4 border-b-2 w-3/4 lg:w-2/4");
+        setScrollHidden()
+
       }
 
       if (currentScroll > 0 && currentScroll > lastScroll) {
@@ -122,33 +131,52 @@ const Menu = ({ Categories }) => {
       return null;
     }
 
+
+
+
+
+
+
+
+
+
     return (
       <div className=" absolute top-0 w-full flex h-screen z-50 ">
         <div
-          className={`fixed top-0 text-[28px] 	h-screen bg-red-500 right-0 w-[30%] z-50 transform transition-transform duration-500 ${
+          className={`fixed top-0 text-[28px]  text-white	h-screen bg-red-400 right-0 lg:w-[30%] z-50 transform transition-transform duration-500 ${
             open ? "translate-x-0 ease-in duration-300 " : "translate-x-full"
           }`}
           onTransitionEnd={handleTransitionEnd}
         >
-          <div className="flex items-center my-4">
-            <form onSubmit={handleSubmit} className="w-full flex items-center">
-              <input
-                type="text"
-                placeholder="Search"
-                value={SearchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                className="text-black w-[80%] mx-auto"
-              />
-            </form>
+          <div className="flex items-center mx-10 my-5">
+            <form onSubmit={handleSubmit} className=" w-full text-lg forms text-black">
+                <label htmlFor="text">
+                    <input 
+                      className=" text-md"
+                      required="" 
+                      value={SearchInput}
+                      onChange={(e) => setSearchInput(e.target.value)} 
+                      placeholder="search your post and insert at least 3 words" id="search" type="text"/>
+                    <div className="icon">
+                        <svg strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="swap-on">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" strokeLinejoin="round" strokeLinecap="round"></path>
+                        </svg>
+                        <svg strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="swap-off">
+                            <path d="M10 19l-7-7m0 0l7-7m-7 7h18" strokeLinejoin="round" strokeLinecap="round"></path>
+                        </svg>
+                    </div>
+                  
+                </label>
+            </form> 
             <button onClick={handleOpen} className="relative px-2 text-[35px]">
               <FaXmark />
             </button>
           </div>
           <div className="m-10 w-[80%] mx-auto ">
             {Categories.map((c, i) => (
-              <>
+              <div key={i}>
                 <div
-                  className=" font-extrabold p-4 hover:backdrop-opacity-10 hover:backdrop-invert  "
+                  className=" font-extrabold p-4 hover:bg-black/5 "
                   key={i}
                 >
                   <span
@@ -183,19 +211,28 @@ const Menu = ({ Categories }) => {
                     </h1>
                   </div>
                 )}
-              </>
+              </div>
             ))}
           </div>
-          <span className="flex text-4xl space-x-2 my-2 w-[80%] mx-auto justify-center  ">
-            <FaSquareFacebook hre className="hover:text-black" />
-            <FaSquareInstagram hre className="hover:text-black" />
-            <FaSquareWhatsapp hre className="hover:text-black" />
-            <FaSquareXTwitter hre className="hover:text-black" />
-            <FaSquareThreads hre className="hover:text-black" />
-            <FaSquarePinterest hre className="hover:text-black" />
-            <FaSquareYoutube hre className="hover:text-black" />
-            <FaTiktok hre className="hover:text-black" />
+          <span className="flex text-4xl space-x-2 my-2  justify-center  ">
+            <FaSquareFacebook href="" className="hover:text-black" />
+            <FaSquareInstagram href="" className="hover:text-black" />
+            <FaSquareWhatsapp href="" className="hover:text-black" />
+            <FaSquareXTwitter href="" className="hover:text-black" />
+            <FaSquareThreads href="" className="hover:text-black" />
+            <FaSquarePinterest href="" className="hover:text-black" />
+            <FaSquareYoutube href="" className="hover:text-black" />
+            <FaTiktok href="" className="hover:text-black" />
           </span>
+          <ul className="flex gap-x-6 gap-y-2 flex-wrap w-[80%] mx-auto">
+            <li><Link href="" className=" hover:text-gray-300 text-base">about us</Link></li>
+            <li><Link href="" className=" hover:text-gray-300 text-base">Privacy notice</Link></li>
+            <li><Link href="" className=" hover:text-gray-300 text-base">cookie policy</Link></li>
+            <li><Link href="" className=" hover:text-gray-300 text-base">Contact</Link></li>
+            {/* <li><Link href="" className=" hover:text-gray-300 text-base">advertise with us</Link></li> */}
+            <li><Link href="" className=" hover:text-gray-300 text-base">send us tips </Link></li>
+            <li><Link href="" className=" hover:text-gray-300 text-base">Share Your Story </Link></li>
+          </ul>
         </div>
 
         <div onClick={handleOpen} className="  h-screen fixed top-0 z-50 left-0 w-[70%]"></div>
@@ -207,15 +244,18 @@ const Menu = ({ Categories }) => {
     <>
       <div
         style={headerStyles}
-        className={`flex sticky top-4 items-center px-2 mt-4  z-50  w-3/4 text-[28px] ${scrollDirection} ${addclassName} justify-between `}
+        className={`flex sticky top-4 items-center px-2 mt-4  border-black dark:border-white  z-50  text-[28px] ${scrollDirection} ${addclassName} justify-between `}
       >
         <Link href="/">
-          <h1 className=" "> logo</h1>
+          <h1 className={`${ScrollHidden}`}> logo</h1>
         </Link>
-        <div className="flex space-x-3  capitalize items-center  right-0  ">
-          {NavMenu}
+        <div className="flex space-x-3 font-semibold capitalize items-center  right-0  ">
+          <div className={`max-lg:hidden flex space-x-3 ${ScrollHidden} `}>
+            {NavMenu}
+
+          </div>
           <button
-            className="flex items-center hover:bg-gray-500/40 px-2 hover:rounded-lg"
+            className="flex items-center hover:bg-gray-500/40 px-2 hover:rounded-full"
             onClick={handleOpen}
           >
             <h1>More</h1>

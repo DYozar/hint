@@ -22,8 +22,8 @@ const TrendSect = ({ data, index }) => {
     const date = moment(item.date);
     const isMoreThanADay = moment().diff(date, "days") >= 1;
     return (
-      <div key={index} className="card my-2 max-sm:w-full ">
-        <div className="bar">{index + 1}</div>
+      <div key={index} className="card  bg-white dark:bg-[#242824]  my-2  max-lg:w-full ">
+        <div className="bar text-white bg-red-400">{index + 1}</div>
         <div className="card_form">
           {" "}
           <Link href={`/post/${item.Slug}`} className=" ">
@@ -59,11 +59,11 @@ const TrendSect = ({ data, index }) => {
                 </label>
                 <label className="side front  ">
                   {" "}
-                  <Link className="  flex capitalize" href={item.cSlug}>
+                  <Link className=" text-red-400 flex capitalize" href={item.cSlug}>
                     <h4> By Staff at&nbsp; </h4>
-                    <time dateTime={item.date}>
+                    <time className="" dateTime={item.date}>
                       {isMoreThanADay
-                        ? date.tz('Europe/Berlin').format('ha z')
+                        ? date.tz('Europe/Berlin').format('ha yy z')
                         : date.fromNow()}
                     </time>
                   </Link>
@@ -79,7 +79,7 @@ const TrendSect = ({ data, index }) => {
   return (
     <div key={index} className="bg-gradient-to-t  w-full h-full ">
       <ol>
-        <h1 className="text-2xl">Top Post on {data[0]?.cTitle}  </h1>
+        <h1 className="text-2xl">Top Post   </h1>
         {Trend}
       </ol>
     </div>

@@ -58,7 +58,7 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
           key={combinedData[0]?.postData[0]?.id}
           className=" lg:w-[55%]  relative mx-auto  md:mb-20 pt-28 md:mb-50 lg:top-150 lg:mb-0 lg:min-h-[750px] lg:pr-30"
         >
-          <HeroSection combinedData={combinedData}/>
+          <HeroSection combinedData={combinedData} />
         </div>
         <div className="lg:w-[30%]  pt-28 mb-20 mx-auto">
           {" "}
@@ -78,12 +78,12 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
                 return <FirstPostCard  key={postIndex} post={post} index={postIndex} />
               }else if(postIndex > 1 )  {
                 return (
-                 <div className="lg:w-[75%] my-6 mx-auto"> <PostCard key={postIndex} post={post} index={postIndex} /></div>
+                 <PostCard key={postIndex} post={post} index={postIndex} />
                 );
               }
             })}
           </div>
-          <div className="lg:w-[30%] w-[75%] my-10 mx-auto">
+          <div className="lg:w-[30%] w-[75%]  my-10 mx-auto">
             {group.categoryData && (
               <h2 className="lg:sticky top-[10%]">
                 <CategorySect key={groupIndex} i={groupIndex} data={group.categoryData} />
@@ -94,9 +94,9 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
       ))}
 
       {results.length > 0 && results.length < maxResults ?
-          <div className="group mt-5  rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:   focus:outline-none active:text-opacity-75  w-[50%] mx-auto " onClick={loadMore}>
+          <div className="group mt-5  rounded-full bg-gradient-to-r  from-red-400  to-[#9147ff] p-[2px] hover:   focus:outline-none active:text-opacity-75  w-[50%] mx-auto " onClick={loadMore}>
             <button
-              className="block rounded-full w-full text-[#191716] bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent outline-none"
+              className="block rounded-full w-full text-[#191716] hover:text-white bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent outline-none"
             >
               Load More
             </button>
