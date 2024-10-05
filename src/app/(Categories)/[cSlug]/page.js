@@ -4,22 +4,36 @@ import {GetCategories , getPostBySubcategory, getPostsByCategory, getSubBasedOnC
 
 
 
-
-
-
 export const revalidate = 0
 
 async function getPost(params) {
   const { cSlug } = params;
   const Post = await getPostsByCategory(cSlug);
   const subTitle = await getSubBasedOnCat(cSlug);
-
-
-  
-
   return  {Post , subTitle };
-
 }
+export async function generateMetadata({ params }) {
+  const {slug} = params;
+  const { Post, subTitle }= await getPost(params)
+  if (!Post || Post.length === 0) {
+    return null;
+  }
+  return {
+    title:Post[0].Categories[0].title,
+    publisher: 'published by hintlr authors',
+    openGraph: {
+      images: [
+        {
+          
+          url: Post?.[0]?.Categories?.[0]?.image?.[0]?.url , // Must be an absolute URL
+          width: 2240,
+          height: 1260,
+          type:'image/jpeg'
+        }],
+    },
+  }
+}
+
 
 
 async function getTrendPost(params) {

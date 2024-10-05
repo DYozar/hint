@@ -1,443 +1,424 @@
-import { gql, request } from 'graphql-request'
+import { gql, request } from "graphql-request";
 
+const url = "http://api.nuttynook.com/";
 
-const url = 'https://serverside-production-41e2.up.railway.app/'
-
-
-export const GetCategories = async ()=>{
-    const GET_CATEGORY = gql`
-  query GetCategories {
-    Categories {
-      id
-      title
-      cSlug
-       SubCategories {
-            id
-            title
-            sSlug
-        }
-    }
-  }
-`;
-
-const result = await request(url, GET_CATEGORY);
-return result.Categories; 
-}
-
-export const GetSubCategories = async ()=>{
-    const GET_SUBCATEGORY = gql`
-    query Query {
+export const GetCategories = async () => {
+  const GET_CATEGORY = gql`
+    query GetCategories {
+      Categories {
+        id
+        title
+        cSlug
         SubCategories {
-            id
-            title
-            sSlug
+          id
+          title
+          sSlug
         }
-    }
-`;
-
-const result = await request(url, GET_SUBCATEGORY);
-return result.SubCategories; 
-}
-
-export const GetPosts = async ()=>{
-    const GET_POSTS = gql`
-   query Query{
-    Posts(sort:{order:desc , field:"date"}) {
-      id
-      title
-      content
-      slug
-      image{
-      url
-      }
-      date
-      reads
-      Categories {
-        title
-        cSlug
-      }
-      SubCategories {
-        title
-        sSlug
-        id
       }
     }
-  }
-`;
+  `;
 
-
-const result = await request(url, GET_POSTS);
-return result.Posts; 
-}
-export const GetTrendPosts = async ()=>{
-    const GET_POSTS = gql`
-    query Query{
-    Posts(sort:{order:desc , field:"reads"}) {
-      id
-      title
-      content
-      slug
-      image{
-      url
-      }
-
-      date
-      reads
-      Categories {
-        title
-        cSlug
-      }
-      SubCategories {
-        title
-        sSlug
-        id
-      }
-    }
-  }
-`;
-
-const result = await request(url, GET_POSTS );
-return result.Posts; 
-}
-
-export const GetSearchingPosts = async (title)=>{
-    const GET_POSTS = gql`
-    query Posts($filters: PostFilterInput) {
-  Posts(filters: $filters) {
-    id
-    title
-    slug
-    date
-    Categories {
-      title
-      cSlug
-    }
-    SubCategories {
-      title
-      sSlug
-      id
-    }
-  }
-}
-
-`;
-const variables = {
-  filters: {
-    title: {
-      containsi:title
-    },
-  },
+  const result = await request(url, GET_CATEGORY);
+  return result.Categories;
 };
-const result = await request(url, GET_POSTS ,variables);
-return result.Posts; 
-}
 
-
-
-
-
-export const GetPostsByCslug = async (cSlug)=>{
-    const GET_POSTS = gql`
-    query Query($filters: PostFilterInput , $sort: SortInput) {
-    Posts(filters: $filters ,sort: $sort) {
-      id
-      title
-      content
-      slug
-      image{
-      url
-      }
-      date
-      Categories {
-        title
-        cSlug
-      }
+export const GetSubCategories = async () => {
+  const GET_SUBCATEGORY = gql`
+    query Query {
       SubCategories {
+        id
         title
         sSlug
-        id
       }
     }
-  }
-`;
+  `;
 
-const variables = {
+  const result = await request(url, GET_SUBCATEGORY);
+  return result.SubCategories;
+};
+
+export const GetPosts = async () => {
+  const GET_POSTS = gql`
+    query Query {
+      Posts(sort: { order: desc, field: "date" }) {
+        id
+        title
+        content
+        slug
+        image {
+          url
+        }
+        date
+        reads
+        Categories {
+          title
+          cSlug
+        }
+        SubCategories {
+          title
+          sSlug
+          id
+        }
+      }
+    }
+  `;
+
+  const result = await request(url, GET_POSTS);
+  return result.Posts;
+};
+export const GetTrendPosts = async () => {
+  const GET_POSTS = gql`
+    query Query {
+      Posts(sort: { order: desc, field: "reads" }) {
+        id
+        title
+        content
+        slug
+        image {
+          url
+        }
+
+        date
+        reads
+        Categories {
+          title
+          cSlug
+        }
+        SubCategories {
+          title
+          sSlug
+          id
+        }
+      }
+    }
+  `;
+
+  const result = await request(url, GET_POSTS);
+  return result.Posts;
+};
+
+export const GetSearchingPosts = async (title) => {
+  const GET_POSTS = gql`
+    query Posts($filters: PostFilterInput) {
+      Posts(filters: $filters) {
+        id
+        title
+        slug
+        date
+        Categories {
+          title
+          cSlug
+        }
+        SubCategories {
+          title
+          sSlug
+          id
+        }
+      }
+    }
+  `;
+  const variables = {
+    filters: {
+      title: {
+        containsi: title
+      }
+    }
+  };
+  const result = await request(url, GET_POSTS, variables);
+  return result.Posts;
+};
+
+export const GetPostsByCslug = async (cSlug) => {
+  const GET_POSTS = gql`
+    query Query($filters: PostFilterInput, $sort: SortInput) {
+      Posts(filters: $filters, sort: $sort) {
+        id
+        title
+        content
+        slug
+        image {
+          url
+        }
+        date
+        Categories {
+          title
+          cSlug
+        }
+        SubCategories {
+          title
+          sSlug
+          id
+        }
+      }
+    }
+  `;
+
+  const variables = {
     filters: {
       category: {
         cSlug: {
-          eq: cSlug,
-        },
-      },
-      
+          eq: cSlug
+        }
+      }
     },
-    sort:{
-      order :"desc",
-      field :"date"
+    sort: {
+      order: "desc",
+      field: "date"
     }
   };
-const result = await request(url, GET_POSTS ,variables);
-return result.Posts.slice(0,4); 
-}
-
-
-
-
-
-
-
-
-
-export const getPostsDetail = async (slug)=>{
-  const GET_POSTS = gql`
- query Posts($filters: PostFilterInput) {
-  Posts(filters: $filters) {
-    id
-    title
-    content
-    image{
-    url
-    }
-    slug
-    date
-    imgAuthor
-    reads
-    Categories {
-      id
-      title
-      cSlug
-    }
-    
-  }
-}
-`;
-
-const variables = {
-  filters: {
-    slug: {
-      eq: slug,
-    },
-  },
-};
-const result = await request(url, GET_POSTS ,variables);
-return result.Posts; 
-}
-
-export const getRelatedPosts = async (slug,cSlug)=>{
-  const GET_POSTS = gql`
- query Posts($filters: PostFilterInput) {
-  Posts(filters: $filters) {
-    id
-    title
-    content
-    image{
-    url
-    }
-    date
-    slug
-    reads
-    Categories {
-      id
-      title
-      cSlug
-    }
-  }
-}
-`;
-
-const variables = {
-  filters: {
-    slug: {
-      ne: slug,
-    },
-    category: {
-      cSlug: {
-        eq: cSlug,
-      },
-  },
-}
-}
-
-
-const result = await request(url, GET_POSTS ,variables);
-return result.Posts; 
-}
-
-
-
-
-
-
-
-export const getPostsByCategory = async (cSlug)=>{
-  const GET_POSTS = gql`
- query Posts($filters: PostFilterInput) {
-  Posts(filters: $filters ,sort:{order:desc , field:"date"}) {
-    id
-    title
-    content
-    image{
-    url
-    }
-    date
-    slug
-    reads
-    Categories {
-      id
-      title
-      cSlug
-    }
-    SubCategories {
-        id
-        title
-        sSlug
-    }
-  }
-}
-`;
-
-const variables = {
-  filters: {
-    category: {
-      cSlug: {
-        eq: cSlug,
-      },
-  },
-}
-}
-
-
-const result = await request(url, GET_POSTS ,variables);
-return result.Posts; 
-}
-
-export const getSubBasedOnCat = async (cSlug)=>{
-  const GET_POSTS = gql`
-query SubCategories($filters: SubCategoryFilterInput) {
-  SubCategories(filters: $filters) {
-  id
-    title
-    sSlug
-    Categories {
-      title
-      cSlug
-    }
-    Posts{
-    title
-    }
-    
-  }
-}
-`;
-
-const variables = {
-  filters: {
-    category: {
-      cSlug: {
-        eq: cSlug,
-      },
-  },
-}
-}
-
-
-try {
   const result = await request(url, GET_POSTS, variables);
-  return result.SubCategories;
-} catch (error) {
-  console.error("GraphQL Error:", error); // Log error for debugging
-  // Handle the error gracefully, e.g., show a message to the user
-  return { message: "An error occurred while fetching subcategories." };
-}
-}
+  return result.Posts.slice(0, 4);
+};
 
-
-export const getPostBySubcategory = async (sSlug)=>{
+export const getPostsDetail = async (slug) => {
   const GET_POSTS = gql`
- query Posts($filters: PostFilterInput) {
-  Posts(filters: $filters) {
-    id
-    title
-    content
-    image{
-    url
+    query Posts($filters: PostFilterInput) {
+      Posts(filters: $filters) {
+        id
+        title
+        content
+        image {
+          url
+        }
+        slug
+        date
+        imgAuthor
+        reads
+        items {
+          id
+          name
+          description
+          price
+          content
+          media {
+            url
+            public_id
+          }
+          links {
+            name
+            url
+          }
+        }
+        Categories {
+          id
+          title
+          cSlug
+        }
+      }
     }
-    date
-    slug
-    reads
-    Categories {
-      id
-      title
-      cSlug
+  `;
+
+  const variables = {
+    filters: {
+      slug: {
+        eq: slug
+      }
     }
-    SubCategories {
+  };
+  const result = await request(url, GET_POSTS, variables);
+  return result.Posts;
+};
+
+export const getRelatedPosts = async (slug, cSlug) => {
+  const GET_POSTS = gql`
+    query Posts($filters: PostFilterInput) {
+      Posts(filters: $filters) {
+        id
+        title
+        content
+        image {
+          url
+        }
+        date
+        slug
+        reads
+        Categories {
+          id
+          title
+          cSlug
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    filters: {
+      slug: {
+        ne: slug
+      },
+      category: {
+        cSlug: {
+          eq: cSlug
+        }
+      }
+    }
+  };
+
+  const result = await request(url, GET_POSTS, variables);
+  return result.Posts;
+};
+
+export const getPostsByCategory = async (cSlug) => {
+  const GET_POSTS = gql`
+    query Posts($filters: PostFilterInput) {
+      Posts(filters: $filters, sort: { order: desc, field: "date" }) {
+        id
+        title
+        content
+        image {
+          url
+        }
+        date
+        slug
+        reads
+        Categories {
+          id
+          title
+          cSlug
+        }
+        SubCategories {
+          id
+          title
+          sSlug
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    filters: {
+      category: {
+        cSlug: {
+          eq: cSlug
+        }
+      }
+    }
+  };
+
+  const result = await request(url, GET_POSTS, variables);
+  return result.Posts;
+};
+
+export const getSubBasedOnCat = async (cSlug) => {
+  const GET_POSTS = gql`
+    query SubCategories($filters: SubCategoryFilterInput) {
+      SubCategories(filters: $filters) {
         id
         title
         sSlug
+        Categories {
+          title
+          cSlug
+        }
+        Posts {
+          title
+        }
+      }
     }
+  `;
+
+  const variables = {
+    filters: {
+      category: {
+        cSlug: {
+          eq: cSlug
+        }
+      }
+    }
+  };
+
+  try {
+    const result = await request(url, GET_POSTS, variables);
+    return result.SubCategories;
+  } catch (error) {
+    console.error("GraphQL Error:", error); // Log error for debugging
+    // Handle the error gracefully, e.g., show a message to the user
+    return { message: "An error occurred while fetching subcategories." };
   }
-}
-`;
+};
 
-const variables = {
-  filters: {
-    subCategory: {
-      sSlug: {
-        eq: sSlug,
-        
-      },
-  },
-}
-}
-
-
-const result = await request(url, GET_POSTS ,variables);
-return result.Posts.slice(0,4); 
-}
-
-
-
-export const GetTrendPostsByCat = async (cSlug)=>{
+export const getPostBySubcategory = async (sSlug) => {
   const GET_POSTS = gql`
- query Posts($filters: PostFilterInput) {
-  Posts(filters: $filters) {
-    id
-    title
-    content
-    image{
-    url
-    }
-    date
-    slug
-    reads
-    Categories {
-      id
-      title
-      cSlug
-    }
-    SubCategories {
+    query Posts($filters: PostFilterInput) {
+      Posts(filters: $filters) {
         id
         title
-        sSlug
+        content
+        image {
+          url
+        }
+        date
+        slug
+        reads
+        Categories {
+          id
+          title
+          cSlug
+        }
+        SubCategories {
+          id
+          title
+          sSlug
+        }
+      }
     }
-  }
-}
-`;
+  `;
 
-const variables = {
-  filters: {
-    category: {
-      cSlug: {
-        eq: cSlug,
-      },
+  const variables = {
+    filters: {
+      subCategory: {
+        sSlug: {
+          eq: sSlug
+        }
+      }
+    }
+  };
+
+  const result = await request(url, GET_POSTS, variables);
+  return result.Posts.slice(0, 4);
+};
+
+export const GetTrendPostsByCat = async (cSlug) => {
+  const GET_POSTS = gql`
+    query Posts($filters: PostFilterInput) {
+      Posts(filters: $filters) {
+        id
+        title
+        content
+        image {
+          url
+        }
+        date
+        slug
+        reads
+        Categories {
+          id
+          title
+          cSlug
+        }
+        SubCategories {
+          id
+          title
+          sSlug
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    filters: {
+      category: {
+        cSlug: {
+          eq: cSlug
+        }
+      }
     },
-  },
-  sort:{
-    order :"desc",
-    field :"reads"
-  }
-}
-const result = await request(url, GET_POSTS ,variables);
+    sort: {
+      order: "desc",
+      field: "reads"
+    }
+  };
+  const result = await request(url, GET_POSTS, variables);
 
-
-return result.Posts; 
-}
+  return result.Posts;
+};

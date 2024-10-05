@@ -17,8 +17,9 @@ import {
     FaTiktok,
     FaX
   } from "react-icons/fa6";
+  import {Social} from '../../../components/MultiUse/socialShare';
 
-const aboutus = () => {
+const AboutUs = () => {
 
     useEffect(() => {
         AOS.init({ duration: 1000,  once: false, mirror: true,anchorPlacement: 'top-bottom',  });
@@ -85,7 +86,7 @@ const aboutus = () => {
             <div data-aos="fade-up"  className="relative bg-red-400 p-2 text-white flex flex-col max-lg:col-span-4 justify-center items-center rounded-3xl  ">
                 <h1 className="  text-4xl font-extrabold">Why We Do It?</h1>
                 <p data-aos="fade-up" className='text-lg py-2 font-thin'>
-                Well, we don't know why  HAHA  !
+                Well, we don&apos;t know why  HAHA  !
                 </p>
                 
             </div>
@@ -119,18 +120,9 @@ const aboutus = () => {
                     </p>
                 </div>
                 <div className='bg-white h-full p-4  flex flex-col justify-center items-center rounded-3xl place-items-start'>
-                    <h1 data-aos="fade-up" className=' text-3xl font-extrabold '>Follow us</h1> 
-                    <div>
-                        <ul data-aos="fade-up" className="py-4 flex text-2xl flex-wrap items-center justify-center  gap-x-6 gap-4">
-                                <FaSquareFacebook href="" className="hover:text-black text-4xl" />
-                                <FaSquareInstagram href="" className="hover:text-black text-4xl" />
-                                <FaSquareWhatsapp href="" className="hover:text-black text-4xl" />
-                                <FaSquareXTwitter href="" className="hover:text-black text-4xl" />
-                                <FaSquareThreads href="" className="hover:text-black text-4xl" />
-                                <FaSquarePinterest href="" className="hover:text-black text-4xl" />
-                                <FaSquareYoutube href="" className="hover:text-black text-4xl" />
-                                <FaTiktok href="" className="hover:text-black text-4xl" />
-                        </ul>
+                    <h1 data-aos="fade-up" className=' text-3xl font-extrabold my-2 '>Follow us</h1> 
+                    <div data-aos="fade-up">
+                        <Social />
                     </div>
                     
                 </div>
@@ -146,4 +138,4 @@ const aboutus = () => {
   )
 }
 
-export default aboutus
+export default AboutUs

@@ -42,7 +42,7 @@ const Card = ({ post, index, bordeColor, bgGrnd, txtColor }) => {
       </div>
       <Link href={`/post/${post.slug}`} className="group  ">
         <Image
-          src="https://i.postimg.cc/C5rqnSYp/6206720.jpg"
+          src={post.image?.url}
           width={352}
           height={235}
           alt="Picture of the author"

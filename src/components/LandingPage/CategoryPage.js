@@ -1,5 +1,4 @@
-'use client';
-
+"use client"
 import React, { useEffect, useState } from 'react';
 import CatCard from '../MultiUse/Card';
 import {PostCard , FirstPostCard} from '../MultiUse/PostCard';

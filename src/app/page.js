@@ -5,6 +5,22 @@ import Landing from '../components/LandingPage/Landing'
 
 
 
+export const metadata = {
+  title: "Nutty's",
+  openGraph: {
+    images: [
+      {
+        url: ``
+      }
+    ],
+    description: "From Memes to Tech, Games to Trivia—Your Daily Dose of Fun, Facts, and Everything In Between!",
+    
+  },
+}
+
+
+
+
 const PostData = async ()=>{
  return await GetPosts();
 
@@ -43,10 +59,10 @@ const trend = Trend.map((article) => ({
   Date:article.date,
   Title: article.title,
   Slug: article.slug,
-  cTitle:article.Categories[0]?.title,
-  cSlug:article.Categories[0]?.cSlug,
+  cTitle:article?.Categories[0]?.title,
+  cSlug:article?.Categories[0]?.cSlug,
   date: article.date,
-  imgUrl:article.imgUrl,
+  image:article.image,
 
 })).slice(0,5) ;
 
@@ -54,7 +70,6 @@ const trend = Trend.map((article) => ({
 
 
  
- //console.log( "POSTS",POSTS)
 
   return (
     <>

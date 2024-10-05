@@ -9,19 +9,23 @@ const HeroSection = ({ combinedData, index }) => {
 
   return (
     <div key={combinedData[0]?.postData[0]?.id}>
-      <div className="mx-auto my-auto bg-gradient-to-r from-red-400  to-[#9147ff] p-1 rounded-bl-3xl rounded-tr-3xl">
-        <Link href={`/post/${combinedData[0]?.postData[0]?.slug}`} className="">
+      <div  style={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 80%, 85% 100%, 0% 100%)', }} className="mx-auto my-auto bg-gradient-to-r from-red-400  to-[#9147ff] p-2  rounded-2xl">
+      <div  style={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 80%, 85% 100%, 0% 100%)', }} className=" dark:bg-[#131313] bg-lights  p-[5px]  ">
+        <Link href={`/post/${combinedData[0]?.postData[0]?.slug}`}  className="">
           <Image
-            src="https://i.postimg.cc/C5rqnSYp/6206720.jpg"
+          style={{clipPath: 'polygon(0% 0%, 100% 0%, 100% 80%, 85% 100%, 0% 100%)' , }}
+            src={combinedData[0]?.postData[0]?.image?.url}
             width={1000}
             height={1000}
             alt="Picture of the author"
-            className="h-[500px] w-[780] object-cover rounded-bl-3xl rounded-tr-3xl dark:border-[#131313] border-8"
+            className="h-[500px] w-[780]  object-cover border-lights dark:border-[#131313] "
             priority={true}
             as="image"
           />
         </Link>
       </div>
+      </div>
+
       <div className="my-5">
         <Link href={`/post/${combinedData[0]?.postData[0]?.slug}`}>
           <h3 className="text-[50px] leading-[42px] sm:leading-[45px] lg:leading-[60px] tracking-tighter px-5 hover:underline underline-offset-8 decoration-[5px] shadow-black font-[900]">
@@ -35,7 +39,7 @@ const HeroSection = ({ combinedData, index }) => {
                 className="md:whitespace-nowrap rounded-full font-normal text-sm"
                 key={index}
                 href={`/[cSlug]`}
-                as={`/${category.cSlug}`}
+                as={`/${category?.cSlug}`}
               >
                 {category.title}
               </Link>

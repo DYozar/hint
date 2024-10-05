@@ -1,7 +1,29 @@
+
 import { gql, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { getPostsDetail, GetPosts, getRelatedPosts } from '../../../GraphQl/Queries';
 import ArticlePage from '../../../components/LandingPage/ArticlePage'
 const Url = 'https://serverside-production-41e2.up.railway.app/';
+
+
+export async function generateMetadata({ params }) {
+  const {slug} = params;
+  const posts = await getPostsDetail(slug);
+  
+  return {
+    title:posts[0].title,
+    publisher: 'published by hintlr authors',
+    openGraph: {
+      images: [
+        {
+          url: posts[0]?.image[0]?.url, // Must be an absolute URL
+          width: 2240,
+          height: 1260,
+          type:'image/jpeg'
+        }],
+    },
+  }
+}
+
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: Url }),
@@ -44,7 +66,6 @@ async function getPost(params) {
   const post = await getPostsDetail(slug);
 
   let cSlug;
-  console.log("post",post)
   
   if (post.length > 0 && post[0].Categories[0]) {
     const { Categories } = post[0];
@@ -56,12 +77,10 @@ async function getPost(params) {
 
   const id = post[0]?.id;
 
-  console.log("id",id)
 
   if (id) {
     await updateArticleViews(id);
   }
-  console.log("relatedPosts",relatedPosts)
   
 
   return {

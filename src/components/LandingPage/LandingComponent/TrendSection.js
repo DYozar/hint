@@ -21,6 +21,8 @@ const TrendSect = ({ data, index }) => {
   const Trend = data.map((item, index) => {
     const date = moment(item.date);
     const isMoreThanADay = moment().diff(date, "days") >= 1;
+    const imageUrl = item.image?.url || "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
+
     return (
       <div key={index} className="card  bg-white dark:bg-[#242824]  my-2  max-lg:w-full ">
         <div className="bar text-white bg-red-400">{index + 1}</div>
@@ -28,7 +30,7 @@ const TrendSect = ({ data, index }) => {
           {" "}
           <Link href={`/post/${item.Slug}`} className=" ">
             <Image
-              src="https://i.postimg.cc/C5rqnSYp/6206720.jpg"
+              src={imageUrl}
               width={1000}
               height={1000}
               alt="Picture of the author"
@@ -50,23 +52,21 @@ const TrendSect = ({ data, index }) => {
               <div className="cube text_s">
                 <label className="side top  mt-1">
                   {" "}
-                  <Link
+                  {item.cSlug &&<Link
                     className="whitespace-nowrap rounded-lg bg-[#9147ff] px-2.5 text-[#fff] py-[0,5px] mt-3  "
                     href={item.cSlug}
                   >
                     {item.cTitle}
-                  </Link>
+                  </Link>}
                 </label>
                 <label className="side front  ">
                   {" "}
-                  <Link className=" text-red-400 flex capitalize" href={item.cSlug}>
                     <h4> By Staff at&nbsp; </h4>
                     <time className="" dateTime={item.date}>
                       {isMoreThanADay
                         ? date.tz('Europe/Berlin').format('ha yy z')
                         : date.fromNow()}
                     </time>
-                  </Link>
                 </label>
               </div>
             </div>

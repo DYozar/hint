@@ -10,15 +10,16 @@ export function PostCard({ post, index }) {
   //   const smallDevices = useMediaQuery({ maxWidth:480 });
   const date = moment(post.date);
   const isMoreThanADay = moment().diff(date, "days") >= 1;
+const imageUrl = post.image?.url || "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
 
   return (
     <div key={index} className="">
       <div className="  flex px-1  items-center max-lg:rounded-2xl   ">
         <div className=" my-3   ">
           <div className="cursor-pointer" key={index}>
-            <Link href={`/post/${post.slug}`} className="group">
+            <Link href={`/post/${post?.slug}`} className="group">
               <Image
-                src="https://i.postimg.cc/C5rqnSYp/6206720.jpg"
+                src={imageUrl}
                 width={500}
                 height={20}
                 alt="Picture of the author"
@@ -30,7 +31,7 @@ export function PostCard({ post, index }) {
           </div>
         </div>
         <div className="p-4 my-3 w-[500px] ">
-          <Link href={`/post/${post.slug}`}>
+          <Link href={`/post/${post?.slug}`}>
             <h3 className="font-extrabold  hover:underline underline-offset-4  text-2xl ">
               {post.title}
             </h3>
@@ -43,7 +44,7 @@ export function PostCard({ post, index }) {
                   className="md:whitespace-nowrap rounded-full font-normal  text-sm  "
                   key={index}
                   href={`/[cSlug]`}
-                  as={`/${category.cSlug}`}
+                  as={`/${category?.cSlug}`}
                 >
                   {category.title}
                 </Link>
@@ -98,7 +99,7 @@ export function FirstPostCard({ post, index }) {
                 key={index}
                 className="md:whitespace-nowrap rounded-full font-normal  text-white text-lg hover:underline  "
                 href={`/[cSlug]`}
-                as={`/${category.cSlug}`}
+                as={`/${category?.cSlug}`}
               >
                 {category.title}
               </Link>
@@ -120,22 +121,22 @@ export function FirstPostCard({ post, index }) {
           </svg>
         </div>
         <Link
-          href={`/post/${post.slug}`}
+          href={`/post/${post?.slug}`}
           className="crd_container w-full mx-auto"
         >
           <Image
-            src="https://i.postimg.cc/C5rqnSYp/6206720.jpg"
+            src={post?.image?.url}
             width={500}
             height={20}
             alt="Picture of the author"
-            className="w-full"
+            className="w-full min-h-96"
             priority={true}
             as="image"
           />
         </Link>
         <div className="sub-crd bg-red-400 text-white named">
           <span className="text_span">
-            <Link href={`/post/${post.slug}`}>
+            <Link href={`/post/${post?.slug}`}>
               <h3 className="text-lg">{post.title}</h3>
             </Link>
           </span>

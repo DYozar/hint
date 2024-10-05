@@ -38,7 +38,7 @@ const SearchPage = async ({ params }) => {
               
               <div className="cardS bg-[#242824] my-4 py-4 "key={post.ide}>
               <Image
-                src="https://i.postimg.cc/C5rqnSYp/6206720.jpg"
+                src={post.image?.url}
                 width={1000}
                 height={1000}
                 alt="Picture of the author"

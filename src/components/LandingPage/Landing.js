@@ -7,14 +7,6 @@ import CategorySect from './LandingComponent/CatSection'
 import TrendSect from './LandingComponent/TrendSection'
 import HeroSection from './LandingComponent/HeroSection'
 
-
-
-
-
-
-
-
-
 const Landing = ({ PostData, CategoryData, TrendData }) => {
   const filteredCategories = CategoryData.filter(
     (category) => category && category.length > 0
@@ -38,8 +30,8 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
   const combinedData = [];
 
   for (let index = 0; index < numberOfCategories; index++) {
-    const start = index * 11;
-    const end = start + 11;
+    const start = index * 10;
+    const end = start + 10;
     const categoryData = resultCat[index]; // Access category data
 
     combinedData.push({
@@ -67,29 +59,34 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
       </div>
 
       {combinedData.map((group, groupIndex) => (
-        <div
-          key={groupIndex}
-          className="relative  lg:flex my-10  justify-between"
-        >
-          <div className="lg:w-[55%] divide-y divide-[#9147ff]/30">
-            {group.postData.map((post, postIndex) => {
-              let content;
-              if (postIndex > 0 && postIndex === 1 ) {
-                return <FirstPostCard  key={postIndex} post={post} index={postIndex} />
-              }else if(postIndex > 1 )  {
-                return (
-                 <PostCard key={postIndex} post={post} index={postIndex} />
-                );
-              }
-            })}
+        <div key={groupIndex} className="relative mx-auto">
+          <div
+            key={groupIndex}
+            className="relative  lg:flex my-10  justify-between"
+          >
+            <div className="lg:w-[55%] divide-y divide-[#9147ff]/30">
+              {group.postData.map((post, postIndex) => {
+                let content;
+                if (postIndex > 0 && postIndex === 1 ) {
+                  return <FirstPostCard  key={postIndex} post={post} index={postIndex} />
+                }else if(postIndex > 1 )  {
+                  return (
+                  <PostCard key={postIndex} post={post} index={postIndex} />
+                  );
+                }
+              })}
+            </div>
+            <div className="lg:w-[30%] w-[75%]  my-10 mx-auto">
+              {group.categoryData && (
+                <h2 className="lg:sticky top-[10%]">
+                  <CategorySect key={groupIndex} i={groupIndex} data={group.categoryData} />
+                </h2>
+              )}
+            </div>
+          
           </div>
-          <div className="lg:w-[30%] w-[75%]  my-10 mx-auto">
-            {group.categoryData && (
-              <h2 className="lg:sticky top-[10%]">
-                <CategorySect key={groupIndex} i={groupIndex} data={group.categoryData} />
-              </h2>
-            )}
-          </div>
+
+          {/* <h1>hello</h1>  */}
         </div>
       ))}
 
