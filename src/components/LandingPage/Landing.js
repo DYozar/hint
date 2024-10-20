@@ -24,7 +24,6 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
   const resultCat = filteredCategories.slice(0, CategorySize);
   const maxResults= PostData.length-1
 
-
   const articlesData = results;
   const numberOfCategories = Math.ceil(articlesData.length / 11);
   const combinedData = [];
@@ -48,11 +47,11 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
       <div className="lg:flex  mb-[100px]  ">
         <div
           key={combinedData[0]?.postData[0]?.id}
-          className=" lg:w-[55%]  relative mx-auto  md:mb-20 pt-28 md:mb-50 lg:top-150 lg:mb-0 lg:min-h-[750px] lg:pr-30"
+          className=" lg:w-[55%]  relative mx-auto  md:mb-20 pt-16 lg:pt-20 md:mb-50  lg:mb-0 lg:min-h-[750px] lg:pr-30"
         >
           <HeroSection combinedData={combinedData} />
         </div>
-        <div className="lg:w-[30%]  pt-28 mb-20 mx-auto">
+        <div className="lg:w-[30%] pt-8 lg:pt-20 mb-20 mx-auto">
           {" "}
           <TrendSect data={TrendData} />
         </div>
@@ -83,9 +82,7 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
                 </h2>
               )}
             </div>
-          
           </div>
-
           {/* <h1>hello</h1>  */}
         </div>
       ))}

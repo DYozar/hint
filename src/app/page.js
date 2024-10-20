@@ -1,16 +1,15 @@
 
 import {GetCategories ,GetPostsByCslug , GetPosts ,GetTrendPosts} from '../GraphQl/Queries'
-import DynamicLink from '../components/MultiUse/DynamicLink';
 import Landing from '../components/LandingPage/Landing'
 
 
 
 export const metadata = {
-  title: "Nutty's",
+  title: "NuttyNook",
   openGraph: {
     images: [
       {
-        url: ``
+        url: '/asset/home.png'
       }
     ],
     description: "From Memes to Tech, Games to Trivia—Your Daily Dose of Fun, Facts, and Everything In Between!",
@@ -38,21 +37,15 @@ const  CategoryData = async ()=> {
       const categorySlug = category.cSlug;
       const categoryPosts = await GetPostsByCslug(categorySlug);
       return categoryPosts
-      
     })
   );
 };
-
-
-
-
 
 export const revalidate =0
 export default async function Home() {
  const Posts = await PostData()
  const Trend = await TrendData()
  const Categories =  await CategoryData()
-
 
 const trend = Trend.map((article) => ({
   ID: article.id,
@@ -65,11 +58,6 @@ const trend = Trend.map((article) => ({
   image:article.image,
 
 })).slice(0,5) ;
-
-
-
-
- 
 
   return (
     <>

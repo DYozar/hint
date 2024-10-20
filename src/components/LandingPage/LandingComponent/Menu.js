@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import DynamicLink from "../../MultiUse/DynamicLink";
 import {
   FaXmark,
   FaPlus,
@@ -31,7 +30,7 @@ const Menu = ({ Categories }) => {
   const [open, setOpen] = useState(false);
   const [scrollDirection, setScrollDirection] = useState("scroll-up");
   const [addclassName, setAddclassName] = useState(
-    "left-3/4 border-b-2 w-full lg:w-2/4"
+    "left-3/4 border-b-2 w-full lg:w-3/4"
   );
   const [ScrollHidden, setScrollHidden] = useState();
   const [SearchInput, setSearchInput] = useState("");
@@ -76,7 +75,7 @@ const Menu = ({ Categories }) => {
         );
         setScrollHidden("hidden");
       } else {
-        setAddclassName("left-3/4 border-b-2 w-full lg:w-2/4");
+        setAddclassName("left-3/4 border-b-2 w-full lg:w-3/4");
         setScrollHidden();
       }
 
@@ -113,9 +112,13 @@ const Menu = ({ Categories }) => {
 
   const NavMenu = Categories.slice(0, size).map((c, i) => {
     return (
-      <div key={i}>
-        <DynamicLink path={c.cSlug}>{c.title}</DynamicLink>
-      </div>
+      <Link
+        className="hover:bg-gray-500/40 px-2  rounded-lg text-nowrap"
+        key={i}
+        href={c.cSlug}
+      >
+        {c.title}
+      </Link>
     );
   });
 
@@ -139,17 +142,17 @@ const Menu = ({ Categories }) => {
     }
 
     return (
-      <div className=" absolute top-0 w-full flex h-screen z-50 ">
+      <div className=" absolute  top-0 w-full flex h-screen z-50 ">
         <div
-          className={`fixed top-0 text-[28px]  text-white	h-screen bg-red-400 right-0 w-full lg:w-[30%] z-50 transform transition-transform duration-500 ${
+          className={`fixed top-0 text-[28px]  text-white	h-screen py-4 bg-red-400 overflow-y-auto right-0 w-full lg:w-[35%] z-50 transform transition-transform duration-500 ${
             open ? "translate-x-0 ease-in duration-300 " : "translate-x-full"
           }`}
           onTransitionEnd={handleTransitionEnd}
         >
-          <div className="flex items-center mx-10 my-5">
+          <div className="flex max-lg:w-[90%] max-lg:mx-auto items-center mx-10 my-5">
             <form
               onSubmit={handleSubmit}
-              className=" w-full text-lg forms text-black"
+              className=" w-full lg:text-[16px] text-[12px] forms text-black"
             >
               <label htmlFor="text">
                 <input
@@ -157,7 +160,7 @@ const Menu = ({ Categories }) => {
                   required=""
                   value={SearchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="search your post and insert at least 3 words"
+                  placeholder="insert at least 3 words to start searching"
                   id="search"
                   type="text"
                 />
@@ -197,10 +200,13 @@ const Menu = ({ Categories }) => {
               <FaXmark />
             </button>
           </div>
-          <div className="m-10 w-[80%] mx-auto ">
+          <div className="m-10 lg:w-[80%] w-[90%] mx-auto ">
             {Categories.map((c, i) => (
               <div key={i}>
-                <div className=" font-extrabold p-4 hover:bg-black/5 " key={i}>
+                <div
+                  className=" font-extrabold p-4 hover:bg-black/5  rounded-lg"
+                  key={i}
+                >
                   <span
                     className="flex items-center cursor-pointer 	 justify-between "
                     onClick={() => handleIsClick(i)}
@@ -212,7 +218,7 @@ const Menu = ({ Categories }) => {
 
                 {clickedIndex === i && (
                   <div className="">
-                    <h1 className="text-2xl ml-10 font-bold">
+                    <h1 className="text-2xl p-4 font-bold">
                       <Link
                         onClick={() => (handleIsClick(i), handleOpen())}
                         className="hover:underline"
@@ -221,11 +227,11 @@ const Menu = ({ Categories }) => {
                         all {c.title}
                       </Link>
                       {c.SubCategories?.map((s, is) => (
-                        <div key={is} className="my-2 hover:underline">
+                        <div key={is} className="my-5 hover:underline">
                           <Link
-                          key={is}
+                            key={is}
                             onClick={() => (handleIsClick(i), handleOpen())}
-                            href={`http://localhost:3000/${c.cSlug}?subcategory=${s.sSlug}`}
+                            href={`${c.cSlug}?subcategory=${s.sSlug}`}
                           >
                             {s.title}
                           </Link>
@@ -239,45 +245,27 @@ const Menu = ({ Categories }) => {
           </div>
           <span className="flex text-4xl space-x-2 my-2  justify-center  ">
             {/* <FaSquareFacebook href="" className="hover:text-black" /> */}
-            <Link  href="https://www.instagram.com/nuttyn00k/">
-              <FaSquareInstagram
-               
-                className="hover:text-black"
-              />
+            <Link href="https://www.instagram.com/nuttyn00k/">
+              <FaSquareInstagram className="hover:text-black" />
             </Link>
-            <Link  href="https://whatsapp.com/channel/0029VarUc3yJf05UTjrEaY2P">
-              <FaSquareWhatsapp
-               
-                className="hover:text-black"
-              />
+            <Link href="https://whatsapp.com/channel/0029VarUc3yJf05UTjrEaY2P">
+              <FaSquareWhatsapp className="hover:text-black" />
             </Link>
             {/* 
             <FaSquareXTwitter href="pinterest.com/NuttyNook/" className="hover:text-black" /> */}
             {/* 
             <FaSquareThreads href="" className="hover:text-black" /> */}
-            <Link  href="pinterest.com/NuttyNook/">
-              <FaSquarePinterest
-               
-                className="hover:text-black"
-              />
+            <Link href="pinterest.com/NuttyNook/">
+              <FaSquarePinterest className="hover:text-black" />
             </Link>
-            <Link   href="https://www.youtube.com/@nuttynookhub">
-              <FaSquareYoutube
-              
-                className="hover:text-black"
-              />
+            <Link href="https://www.youtube.com/@nuttynookhub">
+              <FaSquareYoutube className="hover:text-black" />
             </Link>
             <Link href="https://www.tiktok.com/@nuttyn00k">
-              <FaTiktok
-                
-                className="hover:text-black"
-              />
+              <FaTiktok className="hover:text-black" />
             </Link>
             <Link href="https://discord.gg/cmqVuVqq">
-              <FaDiscord
-                
-                className="hover:text-black"
-              />
+              <FaDiscord className="hover:text-black" />
             </Link>
 
             <Link href="https://www.twitch.tv/nuttyn00k">
@@ -288,36 +276,32 @@ const Menu = ({ Categories }) => {
               <FaReddit className="hover:text-black" />
             </Link>
           </span>
-          <ul className="flex gap-x-6 gap-y-2 flex-wrap w-[80%] mx-auto">
-            <li>
-              <Link href="" className=" hover:text-gray-300 text-base">
-                about us
-              </Link>
-            </li>
-            <li>
-              <Link href="" className=" hover:text-gray-300 text-base">
-                Privacy notice
-              </Link>
-            </li>
-            <li>
-              <Link href="" className=" hover:text-gray-300 text-base">
-                cookie policy
-              </Link>
-            </li>
-            <li>
-              <Link href="" className=" hover:text-gray-300 text-base">
-                Contact
-              </Link>
-            </li>
+          <div className="flex gap-x-4  flex-wrap justify-center lg:w-[80%] mx-auto">
+            <Link href="" className=" hover:text-gray-300 text-base">
+              about us
+            </Link>
+
+            <Link href="" className=" hover:text-gray-300 text-base">
+              Privacy notice
+            </Link>
+
+            <Link href="" className=" hover:text-gray-300 text-base">
+              cookie policy
+            </Link>
+
+            <Link href="" className=" hover:text-gray-300 text-base">
+              Contact
+            </Link>
+
             {/* <li><Link href="" className=" hover:text-gray-300 text-base">advertise with us</Link></li> */}
             {/* <li><Link href="" className=" hover:text-gray-300 text-base">send us tips </Link></li>
             <li><Link href="" className=" hover:text-gray-300 text-base">Share Your Story </Link></li> */}
-          </ul>
+          </div>
         </div>
 
         <div
           onClick={handleOpen}
-          className="  h-screen fixed top-0 z-50 left-0 w-[70%]"
+          className=" max-lg:hidden  h-screen fixed top-0 z-50 left-0 w-[65%]"
         ></div>
       </div>
     );
@@ -327,17 +311,27 @@ const Menu = ({ Categories }) => {
     <>
       <div
         style={headerStyles}
-        className={`flex sticky top-4 items-center p-2 mt-4  border-black dark:border-white  z-50  text-[28px] ${scrollDirection} ${addclassName} justify-between `}
+        className={`flex sticky top-4 items-center p-2 mt-4  border-black dark:border-white  z-50  text-[18px] max-lg:text-[20px] ${scrollDirection} ${addclassName} justify-between `}
       >
-        <Link href="/">
-          <h1 className={`${ScrollHidden}`}> <Image  width={1150} height={1150} className="w-[60%] lg:w-[50%]  h-full" src={'/asset/g4.png'}/></h1>
+        <Link className={`${ScrollHidden}`} href="/">
+          <Image
+            width={1150}
+            height={1150}
+            alt="logo"
+            className="w-[60%] h-full"
+            src={"/asset/g4.png"}
+            sizes="(max-width: 768px) 480px, (max-width: 1200px) 780px, 1150px"
+            loading="lazy" 
+            decoding="async"
+          
+          />
         </Link>
-        <div className="flex space-x-3 font-semibold capitalize items-center  right-0  ">
-          <div className={`max-lg:hidden flex space-x-3 ${ScrollHidden} `}>
+        <div className="flex space-x-3 text-[15px]  font-semibold capitalize items-center  right-0  ">
+          <div className={`max-lg:hidden  flex space-x-1 ${ScrollHidden} `}>
             {NavMenu}
           </div>
           <button
-            className="flex items-center hover:bg-gray-500/40 px-2 hover:rounded-full"
+            className="flex items-center hover:bg-gray-500/40 px-2 hover:rounded-lg"
             onClick={handleOpen}
           >
             <h1>More</h1>

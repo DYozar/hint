@@ -52,7 +52,7 @@ const CategorySect = ({ data, i }) => {
   return (
     <>
       {data[0].Categories?.map((c, is) => (
-        <Link key={c.cSlug} href={`http://localhost:3000/${c.cSlug}`}>
+        <Link key={c.cSlug} href={`https://nuttynook.com/${c.cSlug}`}>
           see all {c.title}
         </Link>
       ))}

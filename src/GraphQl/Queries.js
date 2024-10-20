@@ -1,6 +1,6 @@
 import { gql, request } from "graphql-request";
 
-const url = "http://api.nuttynook.com/";
+const url = "http://localhost:4000";
 
 export const GetCategories = async () => {
   const GET_CATEGORY = gql`
@@ -13,6 +13,7 @@ export const GetCategories = async () => {
           id
           title
           sSlug
+          isGenre
         }
       }
     }
@@ -29,6 +30,7 @@ export const GetSubCategories = async () => {
         id
         title
         sSlug
+        isGenre
       }
     }
   `;
@@ -58,6 +60,7 @@ export const GetPosts = async () => {
           title
           sSlug
           id
+          isGenre
         }
       }
     }
@@ -87,6 +90,7 @@ export const GetTrendPosts = async () => {
         SubCategories {
           title
           sSlug
+          isGenre
           id
         }
       }
@@ -112,6 +116,7 @@ export const GetSearchingPosts = async (title) => {
         SubCategories {
           title
           sSlug
+          isGenre
           id
         }
       }
@@ -147,6 +152,7 @@ export const GetPostsByCslug = async (cSlug) => {
         SubCategories {
           title
           sSlug
+          isGenre
           id
         }
       }
@@ -278,6 +284,7 @@ export const getPostsByCategory = async (cSlug) => {
         }
         SubCategories {
           id
+          isGenre
           title
           sSlug
         }
@@ -305,6 +312,8 @@ export const getSubBasedOnCat = async (cSlug) => {
       SubCategories(filters: $filters) {
         id
         title
+        isGenre
+
         sSlug
         Categories {
           title
@@ -357,6 +366,7 @@ export const getPostBySubcategory = async (sSlug) => {
         }
         SubCategories {
           id
+          isGenre
           title
           sSlug
         }
@@ -400,6 +410,7 @@ export const GetTrendPostsByCat = async (cSlug) => {
           id
           title
           sSlug
+          isGenre
         }
       }
     }
@@ -421,4 +432,68 @@ export const GetTrendPostsByCat = async (cSlug) => {
   const result = await request(url, GET_POSTS, variables);
 
   return result.Posts;
+};
+
+export const GetGenre = async () => {
+  const GET_GENRE = gql`
+    query Query {
+      genres {
+        id
+        genre
+        title
+      }
+    }
+  `;
+
+  const result = await request(url, GET_GENRE);
+  return result.genres;
+};
+
+export const getItemsByGenre = async (sSlug, genre) => {
+  const GET_ITEMS = gql`
+    query GetItem($filters: ItemFilterInput) {
+      Items(filters: $filters) {
+        id
+        name
+        description
+        price
+        date
+        slug
+        date
+        content
+        genres {
+          title
+        }
+        SubCategories {
+          title
+        }
+        media {
+          url
+          public_id
+        }
+        links {
+          name
+          url
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    filters: {
+      subCategory: {
+        sSlug: {
+          eq: sSlug
+        }
+      },
+      genres: {
+        genre: {
+          eq: genre
+        }
+      }
+    }
+  };
+
+  const result = await request(url, GET_ITEMS, variables);
+  return result.Items
 };

@@ -32,9 +32,9 @@ const imageUrl = post.image?.url || "https://cdn.pixabay.com/photo/2022/12/26/13
         </div>
         <div className="p-4 my-3 w-[500px] ">
           <Link href={`/post/${post?.slug}`}>
-            <h3 className="font-extrabold  hover:underline underline-offset-4  text-2xl ">
+            <h1 className="font-extrabold  hover:underline underline-offset-4  text-2xl ">
               {post.title}
-            </h3>
+            </h1>
           </Link>
 
           <div className="flex gap-4 my-2 items-center ">
@@ -51,7 +51,7 @@ const imageUrl = post.image?.url || "https://cdn.pixabay.com/photo/2022/12/26/13
               ))}
             </div>
             <div className="flex items-center gap-1  ">
-              <h4 className="text-sm  font-extralight">By staff</h4>
+              <p className="text-sm  font-extralight">By staff</p>
 
               <svg
                 className="h-4 w-4"
@@ -137,7 +137,7 @@ export function FirstPostCard({ post, index }) {
         <div className="sub-crd bg-red-400 text-white named">
           <span className="text_span">
             <Link href={`/post/${post?.slug}`}>
-              <h3 className="text-lg">{post.title}</h3>
+              <h1 className="text-lg">{post.title}</h1>
             </Link>
           </span>
         </div>

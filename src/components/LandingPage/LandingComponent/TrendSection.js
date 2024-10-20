@@ -61,7 +61,7 @@ const TrendSect = ({ data, index }) => {
                 </label>
                 <label className="side front  ">
                   {" "}
-                    <h4> By Staff at&nbsp; </h4>
+                    <p> By Staff at&nbsp; </p>
                     <time className="" dateTime={item.date}>
                       {isMoreThanADay
                         ? date.tz('Europe/Berlin').format('ha yy z')
@@ -78,10 +78,8 @@ const TrendSect = ({ data, index }) => {
 
   return (
     <div key={index} className="bg-gradient-to-t  w-full h-full ">
-      <ol>
-        <h1 className="text-2xl">Top Post   </h1>
+        <h1 className="text-2xl">Top Post </h1>
         {Trend}
-      </ol>
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import React from 'react'
 import CategoryPage from '../../../components/LandingPage/CategoryPage'
-import {GetCategories , getPostBySubcategory, getPostsByCategory, getSubBasedOnCat, GetSubCategories,GetTrendPostsByCat } from '../../../GraphQl/Queries'
-
-
+import {GetCategories , getPostBySubcategory, getPostsByCategory, getSubBasedOnCat, GetSubCategories,GetTrendPostsByCat,GetGenre } from '../../../GraphQl/Queries'
 
 export const revalidate = 0
+// console.log("r",searchParams.get('subcategory'))
+// console.log("r",searchParams.get('subcategory'))
 
 async function getPost(params) {
   const { cSlug } = params;
@@ -15,11 +15,14 @@ async function getPost(params) {
 export async function generateMetadata({ params }) {
   const {slug} = params;
   const { Post, subTitle }= await getPost(params)
-  if (!Post || Post.length === 0) {
+
+
+  if (!subTitle || subTitle.length === 0) {
     return null;
   }
+
   return {
-    title:Post[0].Categories[0].title,
+    title: !subTitle || subTitle.length === 0 ? 'NuttyNook ' : subTitle[0].Categories[0].title + ' - NuttyNook ',
     publisher: 'published by hintlr authors',
     openGraph: {
       images: [
@@ -34,22 +37,12 @@ export async function generateMetadata({ params }) {
   }
 }
 
-
-
 async function getTrendPost(params) {
   const { cSlug } = params;
   const trend = await GetTrendPostsByCat(cSlug);
-
-
-
-
-
-
   
   return  trend
 }
-
-
 
 const  SubData = async ()=> {
   const SubCategory = await GetSubCategories();
@@ -63,17 +56,18 @@ const  SubData = async ()=> {
     })
   );
 };
-
+const  GENRE = async ()=> {
+  const Genre = await GetGenre();
+  return Genre
+};
 const categoryPage = async ({ params }) => {
 
-
-
-  
 let Trend = await getTrendPost(params)
 let {Post,subTitle } = await getPost(params)
 
 
 let SubCat = await SubData()
+let Genre = await GENRE()
 
 
 
@@ -89,7 +83,7 @@ const trend = Trend.map((article) => ({
 
 })).slice(0,5) ;
 
-  return <CategoryPage  posts={Post}  subTitle={subTitle} Subcategories={SubCat}  TrendData={trend} params={params}/>
+  return <CategoryPage  posts={Post}  subTitle={subTitle} Subcategories={SubCat}  TrendData={trend} Genre={Genre} params={params}/>
 }
 
 export default categoryPage

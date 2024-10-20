@@ -48,7 +48,7 @@ const SearchPage = async ({ params }) => {
               />
               <div className="textBox">
                 <div className="textContent">
-                  <p className="h1 text-2xl hover:underline bold"><Link href={ `http://localhost:3000/post/${post.slug}`}>{post.title}</Link> </p>
+                  <p className="h1 text-2xl hover:underline bold"><Link href={ `https://nuttynook.com/post/${post.slug}`}>{post.title}</Link> </p>
                   <p className="text-xs px-2 text-red-400 font-normal">
                     <time dateTime={post.date}>
                       {isMoreThanADay
@@ -57,7 +57,7 @@ const SearchPage = async ({ params }) => {
                     </time> 
                   </p>
                 </div>
-                <p className="p whitespace-nowrap w-fit rounded-full bg-[#9147ff] px-2.5 text-[#fff] py-0.5 text-xs"><Link href={ `http://localhost:3000/${post.Categories[0].cSlug}`}>{post.Categories[0].title}</Link></p>
+                <p className="p whitespace-nowrap w-fit rounded-full bg-[#9147ff] px-2.5 text-[#fff] py-0.5 text-xs"><Link href={ `https://nuttynook.com/${post.Categories[0].cSlug}`}>{post.Categories[0].title}</Link></p>
               <div>
             </div></div></div>
             )})

@@ -2,20 +2,20 @@
 import { gql, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { getPostsDetail, GetPosts, getRelatedPosts } from '../../../GraphQl/Queries';
 import ArticlePage from '../../../components/LandingPage/ArticlePage'
-const Url = 'https://serverside-production-41e2.up.railway.app/';
+const Url = 'https://api.nuttynook.com/';
 
 
 export async function generateMetadata({ params }) {
   const {slug} = params;
   const posts = await getPostsDetail(slug);
-  
+
   return {
-    title:posts[0].title,
+    title:posts[0]?.title,
     publisher: 'published by hintlr authors',
     openGraph: {
       images: [
         {
-          url: posts[0]?.image[0]?.url, // Must be an absolute URL
+          url: posts[0]?.image.url, // Must be an absolute URL
           width: 2240,
           height: 1260,
           type:'image/jpeg'
@@ -23,7 +23,6 @@ export async function generateMetadata({ params }) {
     },
   }
 }
-
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: Url }),
@@ -92,7 +91,7 @@ async function getPost(params) {
 export default async function Slug({ params }) {
   const { slug } = params;
   const { post, relatedPosts } = await getPost(params);
-  const currentUrl = `http://localhost:3000/post/${slug}`;
+  const currentUrl = `https://nuttynook.com/post/${slug}`;
 
   return (
     <div className='relative  mt-20 mx-auto w-full'>
