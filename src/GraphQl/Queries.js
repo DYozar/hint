@@ -194,7 +194,7 @@ export const getPostsDetail = async (slug) => {
           id
           name
           description
-          price
+          number
           content
           media {
             url
@@ -456,7 +456,7 @@ export const getItemsByGenre = async (sSlug, genre) => {
         id
         name
         description
-        price
+        number
         date
         slug
         date
@@ -504,7 +504,7 @@ export const GetItem = async () => {
         id
         name
         description
-        price
+        number
         date
         slug
         date

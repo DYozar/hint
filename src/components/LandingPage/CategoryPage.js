@@ -136,7 +136,7 @@ const CategoryPage = ({
     <div >
       {/* Category filter buttons */}
       <div className="mt-16 mb-8">
-       {selectedSubcategory >0&& <button
+       {selectedSubcategory && <button
             onClick={handleFilterAll}
             className={`button text-black dark:text-white ${
               selectedFilters.length === 0 ? "active" : ""
