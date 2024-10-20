@@ -199,7 +199,7 @@ const CategoryPage = ({
         } else if (category.isGenre === true ) {
           return (
             <div key={idx}> 
-              <div className="lg:flex mb-[100px]">
+              <div className="lg:flex">
                 <div
                   key={combinedData[0]?.postData[0]?.id}
                   className="lg:w-[55%] relative mx-auto lg:min-h-[750px] lg:pr-30"
