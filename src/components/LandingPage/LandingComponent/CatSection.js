@@ -11,14 +11,14 @@ const CategorySect = ({ data, i }) => {
       "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
     let content = (
       <div key={item.slug} className={` flex my-4   `}>
-        <Link href={`/post/${item?.slug}`} className="w-1/3 ">
+        <Link href={`/post/${item?.slug}`} className="w-[150px] h-[100px]">
           {item.image?.url && ( // Conditionally render the Image component
             <Image
               src={imageUrl}
               width={1000}
               height={1000}
               alt={item?.title || "Picture"}
-              className="rounded-lg  h-full object-cover"
+              className=" w-full h-full  object-cover"
               priority={true}
               as="image"
             />
@@ -34,20 +34,20 @@ const CategorySect = ({ data, i }) => {
               {item?.title}
             </Link>
           </h1>
-          <p className=" text-sm font-thin text-white">
+          {/* <p className=" text-sm font-thin text-white">
             by staff&nbsp;&nbsp;
             <time dateTime={item?.date}>
               {isMoreThanADay
                 ? date.tz("Europe/Berlin").format("ha z")
                 : date.fromNow()}
             </time>
-          </p>
+          </p> */}
         </span>
       </div>
     );
 
     return (
-      <div key={index} className={``}>
+      <div key={index} className={`w-full`}>
         {content}
       </div>
     );

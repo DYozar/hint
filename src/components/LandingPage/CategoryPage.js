@@ -216,7 +216,7 @@ const CategoryPage = ({
                   key={groupIndex}
                   className="relative bottom-1 lg:flex justify-between"
                 >
-                  <div className="lg:w-[55%]">
+                  <div className="lg:w-[50%] mx-auto divide-y divide-[#9147ff]/30">
                     {group.postData.map((post, postIndex) => {
                       let content;
                       if (postIndex > 0 && postIndex === 1) {
@@ -239,7 +239,7 @@ const CategoryPage = ({
                     })}
                   </div>
 
-                  <div className="lg:w-[30%]">
+                  <div className="lg:w-[25%] mx-auto">
                     {group.SubcategoryData && (
                       <h2 className="lg:sticky top-[20%]">
                         <CategorySect

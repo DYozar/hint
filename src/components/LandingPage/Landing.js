@@ -47,11 +47,11 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
       <div className="lg:flex">
         <div
           key={combinedData[0]?.postData[0]?.id}
-          className=" lg:w-[55%]  relative mx-auto pt-16 lg:pt-20   lg:mb-0 lg:min-h-[750px] lg:pr-30"
+          className=" lg:w-[55%]  w-full relative mx-auto pt-16 lg:pt-20   lg:mb-0 lg:min-h-[750px] lg:pr-30"
         >
           <HeroSection combinedData={combinedData} />
         </div>
-        <div className="lg:w-[30%] pt-8 lg:pt-20  mx-auto">
+        <div className="lg:w-[30%] w-full pt-8 lg:pt-20  mx-auto">
           {" "}
           <TrendSect data={TrendData} />
         </div>
@@ -63,7 +63,7 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
             key={groupIndex}
             className="relative  lg:flex my-10  justify-between"
           >
-            <div className="lg:w-[55%] divide-y divide-[#9147ff]/30">
+            <div className="lg:w-[50%] mx-auto divide-y divide-[#9147ff]/30">
               {group.postData.map((post, postIndex) => {
                 let content;
                 if (postIndex > 0 && postIndex === 1 ) {
@@ -75,7 +75,7 @@ const Landing = ({ PostData, CategoryData, TrendData }) => {
                 }
               })}
             </div>
-            <div className="lg:w-[30%] w-[75%]  my-10 mx-auto">
+            <div className="lg:w-[25%] w-[95%]  my-10 mx-auto">
               {group.categoryData && (
                 <h2 className="lg:sticky top-[10%]">
                   <CategorySect key={groupIndex} i={groupIndex} data={group.categoryData} />
