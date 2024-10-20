@@ -24,6 +24,12 @@ import {
   FaX
 } from "react-icons/fa6";
 import Image from "next/image";
+const url = process.env.APP_URL
+
+
+
+
+
 
 const Menu = ({ Categories }) => {
   const [size, setSize] = useState(4);
@@ -115,7 +121,7 @@ const Menu = ({ Categories }) => {
       <Link
         className="hover:bg-gray-500/40 px-2  rounded-lg text-nowrap"
         key={i}
-        href={c.cSlug}
+        href={`https://nuttynook.com/${c.cSlug}`}
       >
         {c.title}
       </Link>
@@ -222,7 +228,7 @@ const Menu = ({ Categories }) => {
                       <Link
                         onClick={() => (handleIsClick(i), handleOpen())}
                         className="hover:underline"
-                        href={c.cSlug}
+                        href={`https://nuttynook.com/${c.cSlug}`}
                       >
                         all {c.title}
                       </Link>
@@ -277,19 +283,19 @@ const Menu = ({ Categories }) => {
             </Link>
           </span>
           <div className="flex gap-x-4  flex-wrap justify-center lg:w-[80%] mx-auto">
-            <Link href="" className=" hover:text-gray-300 text-base">
+            <Link href="https://nuttynook.com/about-us" className=" hover:text-gray-300 text-base">
               about us
             </Link>
 
-            <Link href="" className=" hover:text-gray-300 text-base">
+            <Link href="https://nuttynook.com/privacy-notice" className=" hover:text-gray-300 text-base">
               Privacy notice
             </Link>
 
-            <Link href="" className=" hover:text-gray-300 text-base">
+            <Link href="https://nuttynook.com/cookie-policy" className=" hover:text-gray-300 text-base">
               cookie policy
             </Link>
 
-            <Link href="" className=" hover:text-gray-300 text-base">
+            <Link href="https://nuttynook.com/contact" className=" hover:text-gray-300 text-base">
               Contact
             </Link>
 

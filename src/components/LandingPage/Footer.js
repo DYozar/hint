@@ -27,7 +27,7 @@ const Footer = () => {
       <div className="flex gap-x-6 gap-y-2 flex-wrap">
         <h1><Link aria-label="About Us" href="/about-us" className=" hover:text-gray-300 text-base">about us</Link></h1>
         <h1><Link aria-label="Privacy notice" href="/privacy-notice" className=" hover:text-gray-300 text-base">Privacy notice</Link></h1>
-        <h1><Link aria-label="Cookie Policy" href="/cookie-poh1cy" className=" hover:text-gray-300 text-base">cookie policy</Link></h1>
+        <h1><Link aria-label="Cookie Policy" href="/cookie-policy" className=" hover:text-gray-300 text-base">cookie policy</Link></h1>
         <h1><Link aria-label="Contact" href="/contact" className=" hover:text-gray-300 text-base">Contact</Link></h1>
         {/* <h1><Link href="" className=" hover:text-gray-300 text-base">advertise with us</Link></h1> */}
         {/* <h1><Link href="" className=" hover:text-gray-300 text-base">send us tips </Link></h1>

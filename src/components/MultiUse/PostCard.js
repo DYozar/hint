@@ -88,6 +88,7 @@ export function FirstPostCard({ post, index }) {
   //   const smallDevices = useMediaQuery({ maxWidth:480 });
   const date = moment(post.date);
   const isMoreThanADay = moment().diff(date, "days") >= 1;
+  const imageUrl = post.image?.url || "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
 
   return (
     <>
@@ -125,7 +126,7 @@ export function FirstPostCard({ post, index }) {
           className="crd_container w-full mx-auto"
         >
           <Image
-            src={post?.image?.url}
+            src={imageUrl}
             width={500}
             height={20}
             alt="Picture of the author"

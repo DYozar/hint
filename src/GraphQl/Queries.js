@@ -1,6 +1,6 @@
 import { gql, request } from "graphql-request";
 
-const url = "http://localhost:4000";
+const url = "https://api.nuttynook.com/";
 
 export const GetCategories = async () => {
   const GET_CATEGORY = gql`
@@ -496,4 +496,38 @@ export const getItemsByGenre = async (sSlug, genre) => {
 
   const result = await request(url, GET_ITEMS, variables);
   return result.Items
+};
+export const GetItem = async () => {
+  const GET_ITEM = gql`
+     query GetItem {
+      Items {
+        id
+        name
+        description
+        price
+        date
+        slug
+        date
+        content
+        genres {
+          title
+          genre
+        }
+        SubCategories {
+          title
+        }
+        media {
+          url
+          public_id
+        }
+        links {
+          name
+          url
+        }
+      }
+    }
+  `;
+
+  const result = await request(url, GET_ITEM);
+  return result.Items;
 };

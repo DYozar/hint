@@ -1,16 +1,19 @@
 import React from 'react'
 import CategoryPage from '../../../components/LandingPage/CategoryPage'
-import {GetCategories , getPostBySubcategory, getPostsByCategory, getSubBasedOnCat, GetSubCategories,GetTrendPostsByCat,GetGenre } from '../../../GraphQl/Queries'
+import {GetCategories , getPostBySubcategory, getPostsByCategory, getSubBasedOnCat, GetSubCategories,GetTrendPostsByCat,GetGenre,GetItem } from '../../../GraphQl/Queries'
 
 export const revalidate = 0
-// console.log("r",searchParams.get('subcategory'))
-// console.log("r",searchParams.get('subcategory'))
 
 async function getPost(params) {
   const { cSlug } = params;
   const Post = await getPostsByCategory(cSlug);
   const subTitle = await getSubBasedOnCat(cSlug);
   return  {Post , subTitle };
+}
+async function getItem() {
+  const Item = await GetItem();
+  return  Item
+
 }
 export async function generateMetadata({ params }) {
   const {slug} = params;
@@ -68,6 +71,7 @@ let {Post,subTitle } = await getPost(params)
 
 let SubCat = await SubData()
 let Genre = await GENRE()
+let Item = await getItem()
 
 
 
@@ -79,11 +83,11 @@ const trend = Trend.map((article) => ({
   cTitle:article.Categories[0]?.title,
   cSlug:article.Categories[0]?.cSlug,
   date: article.date,
-  imgUrl:article.imgUrl,
+  image:article.image,
 
 })).slice(0,5) ;
 
-  return <CategoryPage  posts={Post}  subTitle={subTitle} Subcategories={SubCat}  TrendData={trend} Genre={Genre} params={params}/>
+  return <CategoryPage  posts={Post}  subTitle={subTitle} Subcategories={SubCat}  TrendData={trend} Genre={Genre} params={params} item={Item}/>
 }
 
 export default categoryPage

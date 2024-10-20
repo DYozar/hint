@@ -6,26 +6,26 @@ const CategorySect = ({ data, i }) => {
   const CATEGORY = data.map((item, index) => {
     const date = moment(item.date);
     const isMoreThanADay = moment().diff(date, "days") >= 1;
-    const imageUrl = item.image?.url || "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
+    const imageUrl =
+      item.image?.url ||
+      "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
     let content = (
-      <div key={item.slug} className={`cards w-full id${i + 1} `}>
-        <Link
-              href={`/post/${item?.slug}`}
-              className="image w-fit"
-            >
+      <div key={item.slug} className={` flex my-4   `}>
+        <Link href={`/post/${item?.slug}`} className="w-1/3 ">
           {item.image?.url && ( // Conditionally render the Image component
             <Image
-              src={item.image.url}
+              src={imageUrl}
               width={1000}
               height={1000}
               alt={item?.title || "Picture"}
-              className="svg h-full object-cover"
+              className="rounded-lg  h-full object-cover"
               priority={true}
               as="image"
             />
           )}
-           </Link>
-        <span className="title">
+        </Link>
+
+        <span className=" text-left mx-2">
           <h1>
             <Link
               className="hover:underline underline-offset-4   line-clamp-3 font-bold tracking-tighter"
@@ -34,19 +34,23 @@ const CategorySect = ({ data, i }) => {
               {item?.title}
             </Link>
           </h1>
+          <p className=" text-sm font-thin text-white">
+            by staff&nbsp;&nbsp;
+            <time dateTime={item?.date}>
+              {isMoreThanADay
+                ? date.tz("Europe/Berlin").format("ha z")
+                : date.fromNow()}
+            </time>
+          </p>
         </span>
-        <p className="paragraph text-sm font-thin text-white">
-          by staff&nbsp;&nbsp;
-          <time dateTime={item?.date}>
-            {isMoreThanADay
-              ? date.tz("Europe/Berlin").format("ha z")
-              : date.fromNow()}
-          </time>
-        </p>
       </div>
     );
 
-    return <div key={index} className={``}>{content}</div>;
+    return (
+      <div key={index} className={``}>
+        {content}
+      </div>
+    );
   });
 
   return (
@@ -56,9 +60,7 @@ const CategorySect = ({ data, i }) => {
           see all {c.title}
         </Link>
       ))}
-      <div className="z-0 mx-auto w-full lg:sticky top-0 grid grid-cols-2 gap-2">
-        {CATEGORY}
-      </div>
+      <div className="z-0  lg:sticky top-0 ">{CATEGORY}</div>
     </>
   );
 };

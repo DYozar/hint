@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       images: [
         {
-          url: posts[0]?.image.url, // Must be an absolute URL
+          url: posts[0]?.image?.url, // Must be an absolute URL
           width: 2240,
           height: 1260,
           type:'image/jpeg'

@@ -1,151 +1,3 @@
-// "use client"
-// import React, { useEffect, useState } from 'react';
-// import CatCard from '../MultiUse/Card';
-// import {PostCard , FirstPostCard} from '../MultiUse/PostCard';
-// import moment from 'moment';
-// import HeroSection from './LandingComponent/HeroSection';
-// import TrendSect from './LandingComponent/TrendSection';
-// import CategorySect from './LandingComponent/CatSection';
-// import { useSearchParams } from 'next/navigation';
-// import { useRouter } from 'next/navigation';
-
-// const CategoryPage = ({ posts, subTitle, Subcategories, TrendData ,index }) => {
-//   const [selectedFilters, setSelectedFilters] = useState([]);
-//   const [filteredItems, setFilteredItems] = useState(posts);
-//   const [pageSize, setPageSize] = useState(10);
-//   const [CategorySize, setCategorySize] = useState(2);
-//   const searchParams = useSearchParams();
-//   const subcategory  = searchParams.get('subcategory');
-
-// console.log("r",searchParams.get('subcategory'))
-
-//   useEffect(() => {
-//     // Update selectedFilters based on the subcategory  from the URL
-//     if (subcategory ) {
-//       setSelectedFilters([subcategory ]);
-//     } else {
-//       setSelectedFilters([]);
-//     }
-
-//     // Filter items based on the current subcategory
-//     if (subcategory ) {
-//       const filtered = posts.filter((post) =>
-//         post.SubCategories.some((subCategory) => subCategory.sSlug === subcategory )
-//       );
-//       setFilteredItems(filtered);
-//     } else {
-//       setFilteredItems(posts); // Reset to all posts if no subcategory
-//     }
-//   }, [subcategory , posts]);
-
-//   const handleFilterButtonClick = (selectedCategory) => {
-//     const currentFilter = searchParams.get('subcategory');
-//     const newUrl = new URL(window.location);
-
-//     if (currentFilter === selectedCategory) {
-//       // Remove subcategory  if the same category is clicked
-//       newUrl.searchParams.delete('subcategory');
-//     } else {
-//       // Set the new subcategory
-//       newUrl.searchParams.set('subcategory', selectedCategory);
-//     }
-
-//     window.history.pushState({}, '', newUrl);
-//   };
-
-//   const handleFilterAll = () => {
-//     const newUrl = new URL(window.location);
-//     newUrl.searchParams.delete('subcategory');
-//     window.history.pushState({},'', newUrl);
-//   };
-
-//   const Title = subTitle.map((t) =>( {
-//    title: t.title,
-//    slug:t.sSlug,
-//     postTitle: t.Posts.map((t) =>( {
-//       title: t.title,
-//      }))
-//   }));
-
-//   const filters = [Title];
-//   const resultSub = Subcategories.slice(0, CategorySize);
-
-//   const Post = filteredItems.slice(0, pageSize);
-//   const articlesData = Post;
-//   const numberOfCategories = Math.ceil(articlesData.length / 10);
-//   const combinedData = [];
-
-//   for (let index = 0; index < numberOfCategories; index++) {
-//     const start = index * 10;
-//     const end = start + 10;
-//     const SubcategoryData = resultSub[index];
-
-//     combinedData.push({
-//       SubcategoryData,
-//       postData: articlesData.slice(start, end),
-//     });
-//   }
-//   return (
-//     <div>
-//       <div className=" my-16 px-2">
-//         <button
-//           onClick={handleFilterAll}
-//           className={`button text-black dark:text-white ${selectedFilters.length === 0 ? 'active' : ''}`}
-//         >
-//           All
-//         </button>
-//         {filters.flat().map((category, idx) => (
-//           <button
-//             onClick={() => handleFilterButtonClick(category.slug)}
-//             className={`button text-black dark:text-white ${selectedFilters.includes(category.slug) ? 'active' : ''}`}
-//             key={`filters-${idx}`}
-//           >
-//             {category.title}
-//           </button>
-//         ))}
-//       </div>
-
-//       <div className="lg:flex mb-[100px]">
-//         <div
-//           key={combinedData[0]?.postData[0]?.id}
-//           className="lg:w-[55%] relative mx-auto lg:min-h-[750px] lg:pr-30"
-//         >
-//           <HeroSection combinedData={combinedData} index={index} />
-//         </div>
-//         <div className="lg:w-[30%] mb-20 mx-auto">
-//           <TrendSect data={TrendData} />
-//         </div>
-//       </div>
-
-//       {combinedData.map((group, groupIndex) => (
-//         <div key={groupIndex} className="relative bottom-1 lg:flex justify-between">
-//           <div className="lg:w-[55%]">
-//           {group.postData.map((post, postIndex) => {
-//               let content;
-//               if (postIndex > 0 && postIndex === 1 ) {
-//                 return <FirstPostCard  key={postIndex} post={post} index={postIndex} />
-//               }else if(postIndex > 1 )  {
-//                 return (
-//                  <PostCard key={postIndex} post={post} index={postIndex} />
-//                 );
-//               }
-//             })}
-//           </div>
-//           <div className="lg:w-[30%]">
-//             {group.SubcategoryData && (
-//               <h2 className="lg:sticky top-[20%]">
-//                 <CategorySect key={groupIndex} data={group.SubcategoryData} i={groupIndex} />
-//               </h2>
-//             )}
-//           </div>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default CategoryPage;
-
 "use client";
 import React, { useEffect, useState } from "react";
 import { PostCard, FirstPostCard } from "../MultiUse/PostCard";
@@ -153,6 +5,7 @@ import HeroSection from "./LandingComponent/HeroSection";
 import TrendSect from "./LandingComponent/TrendSection";
 import CategorySect from "./LandingComponent/CatSection";
 import { useSearchParams } from "next/navigation";
+import { getItemsByGenre } from "../../GraphQl/Queries";
 
 const CategoryPage = ({
   posts,
@@ -161,15 +14,17 @@ const CategoryPage = ({
   Genre,
   TrendData,
   index,
-  getItemsByGenre
+  item
 }) => {
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState(null);
-  const [filteredItems, setFilteredItems] = useState(posts);
+  const [filteredItem, setFilteredItem] = useState(item);
+  const [filteredPost, setFilteredPost] = useState(posts);
   const searchParams = useSearchParams();
   const subcategory = searchParams.get("subcategory");
   const genre = searchParams.get("genre");
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedItemFilters, setSelectedItemFilters] = useState([]);
   const [pageSize, setPageSize] = useState(10);
   const [CategorySize, setCategorySize] = useState(2);
 
@@ -185,18 +40,26 @@ const CategoryPage = ({
           (subCategory) => subCategory.sSlug === subcategory
         )
       );
-      setFilteredItems(filtered);
+      setFilteredPost(filtered);
     } else {
       setSelectedSubcategory(null);
-      setFilteredItems(posts); // Reset to all posts if no subcategory
+      setFilteredPost(posts); // Reset to all posts if no subcategory
       setSelectedFilters([]);
     }
 
     // Set selected genre based on the URL
     if (genre) {
       setSelectedGenre(genre);
+
+      setSelectedItemFilters(genre);
+      const filtered = item.filter((i) =>
+        i.genres.some((g) => g.genre === genre)
+      );
+      setFilteredItem(filtered);
     } else {
       setSelectedGenre(null);
+      setFilteredItem(item); // Reset to all posts if no subcategory
+      setSelectedItemFilters([]);
     }
   }, [subcategory, genre, posts]);
 
@@ -221,13 +84,21 @@ const CategoryPage = ({
 
   const handleGenreClick = (genre) => {
     const newUrl = new URL(window.location);
-    newUrl.searchParams.set("genre", genre.title);
-    setSelectedGenre(genre.title); // Update the selected genre
+    newUrl.searchParams.set("genre", genre.genre);
+    setSelectedGenre(genre.genre); // Update the selected genre
     window.history.pushState({}, "", newUrl);
   };
   const handleFilterAll = () => {
     const newUrl = new URL(window.location);
     newUrl.searchParams.delete("subcategory");
+    newUrl.searchParams.delete("genre");
+
+    window.history.pushState({}, "", newUrl);
+  };
+  const handleFilterAllItem = () => {
+    const newUrl = new URL(window.location);
+    newUrl.searchParams.delete("genre");
+
     window.history.pushState({}, "", newUrl);
   };
   const Title = subTitle.map((t) => ({
@@ -242,7 +113,9 @@ const CategoryPage = ({
   const filters = Title;
   const resultSub = Subcategories.slice(0, CategorySize);
 
-  const Post = filteredItems.slice(0, pageSize);
+  const Post = filteredPost.slice(0, pageSize);
+  const Item = filteredItem;
+
   const articlesData = Post;
   const numberOfCategories = Math.ceil(articlesData.length / 10);
   const combinedData = [];
@@ -258,19 +131,21 @@ const CategoryPage = ({
     });
   }
 
+
   return (
-    <div>
+    <div >
       {/* Category filter buttons */}
-      <div className="mt-16 ">
-        <button
-          onClick={handleFilterAll}
-          className={`button text-black dark:text-white ${
-            selectedFilters.length === 0 ? "active" : ""
-          }`}
-        >
-          All
-        </button>
+      <div className="mt-16 mb-8">
+       {selectedSubcategory >0&& <button
+            onClick={handleFilterAll}
+            className={`button text-black dark:text-white ${
+              selectedFilters.length === 0 ? "active" : ""
+            }`}
+          >
+            All
+        </button>}
         {filters.map((category, idx) => (
+          
           <button
             onClick={() => handleCategoryClick(category)}
             className={`button text-black dark:text-white ${
@@ -284,17 +159,29 @@ const CategoryPage = ({
       </div>
 
       {/* Show genres under the selected subcategory if it has genres */}
-      {selectedSubcategory &&
-        filters.map((category) => {
-          if (category.slug === selectedSubcategory && category.isGenre) {
-            return (
-              <div key={category.slug} className="my-6">
+      {filters.map((category ,idx) => {
+        if (
+          selectedSubcategory &&
+          category.slug === selectedSubcategory &&
+          category.isGenre === true
+        ) {
+          return (
+            <div key={idx}>
+              <div key={category.id} className="my-6">
                 <h2 className="text-xl  font-bold">{category.title}:</h2>
+                <button
+                  onClick={handleFilterAllItem}
+                  className={`button text-black dark:text-white ${
+                    selectedItemFilters.length === 0 ? "active" : ""
+                  }`}
+                >
+                  All
+                </button>
                 {Genre.map((genre, idx) => (
                   <button
                     key={`genre-${idx}`}
                     className={`button text-black dark:text-white ${
-                      selectedGenre === genre.title ? "active" : ""
+                      selectedGenre === genre.genre ? "active" : ""
                     }`}
                     onClick={() => handleGenreClick(genre)}
                   >
@@ -302,59 +189,73 @@ const CategoryPage = ({
                   </button>
                 ))}
               </div>
-            );
-          }
-          return null;
-        })}
+                {Item.length > 0 ? (
+                  Item.map((item ,idx) => <div key={idx}>{item.name}</div>)
+                ) : (
+                  <div>No items found for this category and genre.</div>
+                )}
+            </div>
+          );
+        } else if (category.isGenre === true ) {
+          return (
+            <div key={idx}> 
+              <div className="lg:flex mb-[100px]">
+                <div
+                  key={combinedData[0]?.postData[0]?.id}
+                  className="lg:w-[55%] relative mx-auto lg:min-h-[750px] lg:pr-30"
+                >
+                  <HeroSection combinedData={combinedData} index={index} />
+                </div>
+                <div className="lg:w-[30%] mb-20 mx-auto">
+                  <TrendSect data={TrendData} />
+                </div>
+              </div>
 
-      <div className="lg:flex mb-[100px]">
-        <div
-          key={combinedData[0]?.postData[0]?.id}
-          className="lg:w-[55%] relative mx-auto lg:min-h-[750px] lg:pr-30"
-        >
-          <HeroSection combinedData={combinedData} index={index} />
-        </div>
-        <div className="lg:w-[30%] mb-20 mx-auto">
-          <TrendSect data={TrendData} />
-        </div>
-      </div>
-
-      {combinedData.map((group, groupIndex) => (
-        <div
-          key={groupIndex}
-          className="relative bottom-1 lg:flex justify-between"
-        >
-          <div className="lg:w-[55%]">
-            {group.postData.map((post, postIndex) => {
-              let content;
-              if (postIndex > 0 && postIndex === 1) {
-                return (
-                  <FirstPostCard
-                    key={postIndex}
-                    post={post}
-                    index={postIndex}
-                  />
-                );
-              } else if (postIndex > 1) {
-                return (
-                  <PostCard key={postIndex} post={post} index={postIndex} />
-                );
-              }
-            })}
-          </div>
-          <div className="lg:w-[30%]">
-            {group.SubcategoryData && (
-              <h2 className="lg:sticky top-[20%]">
-                <CategorySect
+              {combinedData.map((group, groupIndex) => (
+                <div
                   key={groupIndex}
-                  data={group.SubcategoryData}
-                  i={groupIndex}
-                />
-              </h2>
-            )}
-          </div>
-        </div>
-      ))}
+                  className="relative bottom-1 lg:flex justify-between"
+                >
+                  <div className="lg:w-[55%]">
+                    {group.postData.map((post, postIndex) => {
+                      let content;
+                      if (postIndex > 0 && postIndex === 1) {
+                        return (
+                          <FirstPostCard
+                            key={postIndex}
+                            post={post}
+                            index={postIndex}
+                          />
+                        );
+                      } else if (postIndex > 1) {
+                        return (
+                          <PostCard
+                            key={postIndex}
+                            post={post}
+                            index={postIndex}
+                          />
+                        );
+                      }
+                    })}
+                  </div>
+
+                  <div className="lg:w-[30%]">
+                    {group.SubcategoryData && (
+                      <h2 className="lg:sticky top-[20%]">
+                        <CategorySect
+                          key={groupIndex}
+                          data={group.SubcategoryData}
+                          i={groupIndex}
+                        />
+                      </h2>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        }
+      })}
     </div>
   );
 };
