@@ -6,6 +6,7 @@ import moment from "moment-timezone";
 const HeroSection = ({ combinedData, index }) => {
   const date = moment(combinedData[0]?.postData[0]?.date);
   const isMoreThanADay = moment().diff(date, "days") >= 1;
+  const imageUrl = combinedData[0]?.postData[0]?.image?.url || "/asset/postbanner.png";
 
   return (
     <div className=" lg:w-[80%] mx-auto" key={combinedData[0]?.postData[0]?.id}>
@@ -15,7 +16,7 @@ const HeroSection = ({ combinedData, index }) => {
           // style={{
           //   clipPath: "polygon(0% 0%, 100% 0%, 100% 80%, 85% 100%, 0% 100%)"
           // }}
-          src={combinedData[0]?.postData[0]?.image?.url}
+          src={imageUrl}
           className="lg:h-[500px] lg:w-[50%]  object-cover border-lights -2xl dark:border-[#131313] "
           width={1000} /* Set a width that ensures full width */
           height={500} /* Set a proportional height (you can adjust this) */

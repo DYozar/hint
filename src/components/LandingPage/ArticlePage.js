@@ -45,7 +45,7 @@ const ArticlePage = ({ detail, relatedPosts, currentUrl }) => {
       const isMoreThanADay = moment().diff(date, "days") >= 1;
       const imageUrl =
         item.image?.url ||
-        "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
+        "/asset/postbanner.png";
 
       return (
         <div key={index} className=" ">

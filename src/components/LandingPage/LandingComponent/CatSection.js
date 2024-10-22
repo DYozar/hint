@@ -6,12 +6,10 @@ const CategorySect = ({ data, i }) => {
   const CATEGORY = data.map((item, index) => {
     const date = moment(item.date);
     const isMoreThanADay = moment().diff(date, "days") >= 1;
-    const imageUrl =
-      item.image?.url ||
-      "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
+    const imageUrl =item.image?.url || "/asset/postbanner.png";
     let content = (
-      <div key={item.slug} className={` flex my-4   `}>
-        <Link href={`/post/${item?.slug}`} className="w-[150px] h-[100px]">
+      <div key={item.slug} className={` flex justify-normal my-4  w-full  `}>
+        <Link href={`/post/${item?.slug}`} className="w-[40%] h-[100px]">
           {item.image?.url && ( // Conditionally render the Image component
             <Image
               src={imageUrl}
@@ -25,7 +23,7 @@ const CategorySect = ({ data, i }) => {
           )}
         </Link>
 
-        <span className=" text-left mx-2">
+        <span className=" text-left w-[60%] mx-2">
           <h1>
             <Link
               className="hover:underline underline-offset-4   line-clamp-3 font-bold tracking-tighter"

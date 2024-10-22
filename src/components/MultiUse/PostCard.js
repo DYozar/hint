@@ -10,7 +10,7 @@ export function PostCard({ post, index }) {
   //   const smallDevices = useMediaQuery({ maxWidth:480 });
   const date = moment(post.date);
   const isMoreThanADay = moment().diff(date, "days") >= 1;
-const imageUrl = post.image?.url || "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
+const imageUrl = post.image?.url || "/asset/postbanner.png";
 
   return (
     <div key={index} className=" my-10">
@@ -88,7 +88,7 @@ export function FirstPostCard({ post, index }) {
   //   const smallDevices = useMediaQuery({ maxWidth:480 });
   const date = moment(post.date);
   const isMoreThanADay = moment().diff(date, "days") >= 1;
-  const imageUrl = post.image?.url || "https://cdn.pixabay.com/photo/2022/12/26/13/50/flower-7679117_1280.jpg";
+  const imageUrl = post.image?.url || "/asset/postbanner.png";
 
   return (
     <>
